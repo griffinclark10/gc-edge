@@ -1,0 +1,65 @@
+---
+import { ticker } from '../data/home';
+
+// Four identical runs; the track slides by half its width (two runs) per loop, so
+// the seam never shows, even on very wide screens.
+const runs = [0, 1, 2, 3];
+---
+
+<div class="ticker mono" aria-hidden="true">
+  <div class="track">
+    {runs.map(() => (
+      <span class="run">
+        {ticker.map((item) => (
+          <>
+            <span>{item}</span>
+            <span class="sep">✦</span>
+          </>
+        ))}
+      </span>
+    ))}
+  </div>
+</div>
+
+<style>
+  .ticker {
+    overflow: hidden;
+    padding: 14px 0;
+    background: var(--accent);
+    color: var(--bp-deep);
+    border-block: 3px solid var(--bp-deep);
+    font-size: 16px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .track {
+    display: flex;
+    width: max-content;
+    animation: marquee 40s linear infinite;
+  }
+
+  .ticker:hover .track {
+    animation-play-state: paused;
+  }
+
+  .run {
+    display: flex;
+    gap: 16px;
+    padding-right: 16px;
+  }
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* §4.4: static under reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .track {
+      animation: none;
+      padding-left: var(--gutter);
+    }
+  }
+</style>

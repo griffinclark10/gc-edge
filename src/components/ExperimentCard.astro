@@ -1,0 +1,148 @@
+---
+import Fill from './Fill.astro';
+import { getIllustration } from './illustrations';
+import { experimentHref, type Experiment } from '../lib/experiments';
+
+interface Props {
+  entry: Experiment;
+}
+
+const { entry } = Astro.props;
+const { kicker, title, summary, result, notes, illustration } = entry.data;
+const href = experimentHref(entry);
+const art = getIllustration(illustration);
+const Art = art?.component;
+---
+
+<article class:list={['card', { linked: href }]}>
+  {Art && (
+    <div class:list={['art', art.ground]}>
+      <Art />
+    </div>
+  )}
+  <div class="body">
+    <p class="kicker mono">
+      <Fill text={kicker} />
+    </p>
+    <h3>
+      {href ? (
+        <a href={href}>
+          <Fill text={title} />
+        </a>
+      ) : (
+        <Fill text={title} />
+      )}
+    </h3>
+    {notes.map((note) => (
+      <p class="note mono">
+        <Fill text={note} />
+      </p>
+    ))}
+    <p class="summary">
+      <Fill text={summary} />
+    </p>
+    {result && (
+      <p class="result mono">
+        result: <Fill text={result} />
+      </p>
+    )}
+  </div>
+</article>
+
+<style>
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--pp-card);
+    color: var(--pp-ink-deep);
+    border: 3px solid var(--bp-ink);
+    transition:
+      transform 0.15s,
+      box-shadow 0.15s;
+  }
+
+  /* §4.4: only cards with a page lift, so hover never promises a link that isn't there */
+  .card.linked:hover,
+  .card.linked:has(a:focus-visible) {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--accent);
+  }
+
+  .card.linked:has(a:focus-visible) {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+  }
+
+  h3 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* whole card is the hit area; the accessible name stays the title */
+  h3 a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  h3 a:focus-visible {
+    outline: none;
+  }
+
+  .art {
+    height: 180px;
+    border-bottom: 3px solid var(--bp-deep);
+    overflow: hidden;
+  }
+
+  .art.deep {
+    background: var(--bp-deep);
+  }
+
+  .art.accent {
+    background: var(--accent);
+  }
+
+  .body {
+    flex: 1;
+    padding: 22px 22px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .kicker {
+    margin: 0;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--pp-muted);
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .note {
+    margin: 0;
+    font-size: 13px;
+    color: var(--pp-muted);
+  }
+
+  .summary {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--pp-body);
+  }
+
+  .result {
+    margin: auto 0 0;
+    padding-top: 12px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+</style>

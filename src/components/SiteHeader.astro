@@ -19,8 +19,8 @@ const items = [
 ---
 
 <header class="site-header container">
-  <a class="logo mono" href="/" aria-label="Griffin Clark, home">
-    gc<span>/</span>edge
+  <a class="logo mono" href="/">
+    gc<span class="slash">/</span>edge<span class="visually-hidden">: Griffin Clark, home</span>
   </a>
   {!minimal && (
     <nav aria-label="Primary" class="mono">
@@ -60,7 +60,7 @@ const items = [
     text-decoration: none;
   }
 
-  .logo span {
+  .logo .slash {
     color: var(--logo-slash);
   }
 

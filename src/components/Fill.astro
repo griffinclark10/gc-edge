@@ -1,0 +1,11 @@
+---
+// Renders copy with any [FILL…] / [CONFIRM…] / [N] style placeholder marked up
+// visibly (SPEC §0.3: placeholders stay on the page, as written, until supplied).
+interface Props {
+  text: string;
+}
+
+const parts = Astro.props.text.split(/(\[[^\]]+\])/g).filter(Boolean);
+---
+
+{parts.map((part) => (/^\[[^\]]+\]$/.test(part) ? <span class="ph">{part}</span> : part))}

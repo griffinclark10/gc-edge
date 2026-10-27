@@ -4,35 +4,76 @@ import SiteHeader from '../components/SiteHeader.astro';
 import SignalFooter from '../components/SignalFooter.astro';
 import Button from '../components/Button.astro';
 import DetectionBox from '../components/DetectionBox.astro';
+import SpecSheet from '../components/SpecSheet.astro';
+import Ticker from '../components/Ticker.astro';
+import SectionHead from '../components/SectionHead.astro';
+import FeaturedExperiment from '../components/FeaturedExperiment.astro';
+import ExperimentCard from '../components/ExperimentCard.astro';
+import Worldline from '../components/Worldline.astro';
+import LabBench from '../components/LabBench.astro';
 import { SITE } from '../lib/site';
+import { getListedExperiments } from '../lib/experiments';
 
-// M1 shell: header, a bare hero (to exercise DetectionBox and Button) and the footer.
-// Spec sheet, ticker, experiments, worldline and lab bench land in M2.
+const experiments = await getListedExperiments();
+const featured = experiments.find((e) => e.data.featured);
+const grid = experiments.filter((e) => e !== featured);
 ---
 
 <BaseLayout title={SITE.homeTitle} surface="blueprint">
   <SiteHeader />
   <main id="main">
     <section id="top" class="container hero">
-      <p class="eyebrow">sheet 01 of 04 · frame 000417 · edge-01 · scale 1:1</p>
-      <h1>
-        <DetectionBox label="person · id 07 · 0.98">Griffin</DetectionBox>
-        <br />
-        <span class="surname">
-          Clark<span class="stop">.</span>
-        </span>
-      </h1>
-      <p class="lede">
-        I make computer vision run on small hardware, and keep it running in the real world.
-        Engineering physicist; currently leading engineering for an edge-AI retail analytics
-        platform deployed in 11+ countries.
-      </p>
-      <div class="actions">
-        <Button href="#experiments" variant="primary">
-          run inference on my work →
-        </Button>
-        <Button href={SITE.resume}>résumé.pdf</Button>
+      <div class="hero-main">
+        <p class="eyebrow">sheet 01 of 04 · frame 000417 · edge-01 · scale 1:1</p>
+        <h1>
+          <DetectionBox label="person · id 07 · 0.98">Griffin</DetectionBox>
+          <br />
+          <span class="surname">
+            Clark<span class="stop">.</span>
+          </span>
+        </h1>
+        <p class="lede">
+          I make computer vision run on small hardware, and keep it running in the real world.
+          Engineering physicist; currently leading engineering for an edge-AI retail analytics
+          platform deployed in 11+ countries.
+        </p>
+        <div class="actions">
+          <Button href="#experiments" variant="primary">
+            run inference on my work →
+          </Button>
+          <Button href={SITE.resume}>résumé.pdf</Button>
+        </div>
       </div>
+      <SpecSheet />
+    </section>
+
+    <Ticker />
+
+    <section id="experiments" class="container section" aria-labelledby="experiments-title">
+      <SectionHead
+        id="experiments-title"
+        title="Selected experiments"
+        note={`n = ${experiments.length} · results reproducible on request · error bars available upon interrogation`}
+      />
+      {featured && <FeaturedExperiment entry={featured} />}
+      <div class="grid">
+        {grid.map((entry) => (
+          <ExperimentCard entry={entry} />
+        ))}
+      </div>
+    </section>
+
+    <section id="worldline" class="container section" aria-labelledby="worldline-title">
+      <SectionHead
+        id="worldline-title"
+        title="My worldline"
+        note="a career, plotted as a spacetime diagram. c = 1. time flows up."
+      />
+      <Worldline />
+    </section>
+
+    <section id="bench" class="container section" aria-labelledby="bench-title">
+      <LabBench />
     </section>
   </main>
   <SignalFooter />
@@ -42,6 +83,15 @@ import { SITE } from '../lib/site';
   .hero {
     padding-top: 96px;
     padding-bottom: 72px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 56px;
+    align-items: flex-end;
+  }
+
+  .hero-main {
+    flex: 999 1 560px;
+    min-width: 0;
   }
 
   .eyebrow {
@@ -84,9 +134,16 @@ import { SITE } from '../lib/site';
     gap: 12px;
   }
 
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+    gap: 24px;
+  }
+
   @media (max-width: 720px) {
     .hero {
       padding-top: 72px;
+      gap: 48px;
     }
 
     .lede {

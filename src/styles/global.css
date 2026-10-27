@@ -82,8 +82,21 @@ body.surface-paper {
   padding-inline: var(--gutter);
 }
 
+.section {
+  padding-top: var(--section-pad);
+  padding-bottom: 40px;
+}
+
 .mono {
   font-family: var(--font-mono);
+}
+
+/* [FILL] / [CONFIRM] placeholders (rendered by <Fill>): visible, as written, and
+   obviously unfinished. Uses currentColor so it works on every surface. */
+.ph {
+  text-decoration: underline dashed 1px;
+  text-underline-offset: 0.2em;
+  text-decoration-skip-ink: none;
 }
 
 .eyebrow {

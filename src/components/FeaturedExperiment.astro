@@ -1,0 +1,217 @@
+---
+import Fill from './Fill.astro';
+import { experimentHref, type Experiment } from '../lib/experiments';
+
+interface Props {
+  entry: Experiment;
+}
+
+const { entry } = Astro.props;
+const { kicker, title, summary, notes, status, terminal = [] } = entry.data;
+const href = experimentHref(entry);
+
+// "EXP. 007 · OPEN SOURCE · IN PROGRESS": the status segment is yellow while unshipped.
+const segments = kicker.split(' · ');
+const highlightStatus = status !== 'shipped';
+
+// Terminal mock: "$ …" and "--…" lines are the command, "✓ …" lines are output;
+// the final output line is the yellow payoff.
+const lastOutput = terminal.findLastIndex((line) => line.startsWith('✓'));
+const lines = terminal.map((text, i) => ({
+  text,
+  kind: text.startsWith('✓') ? 'out' : 'cmd',
+  continued: text.startsWith('--'),
+  payoff: i === lastOutput,
+}));
+---
+
+<article class:list={['featured', { linked: href }]}>
+  <div class="info">
+    <p class="kicker mono">
+      {segments.map((segment, i) => (
+        <>
+          {i > 0 && ' · '}
+          {highlightStatus && i === segments.length - 1 ? (
+            <span class="status">{segment}</span>
+          ) : (
+            segment
+          )}
+        </>
+      ))}
+    </p>
+    <h3>
+      {href ? (
+        <a href={href}>
+          <Fill text={title} />
+        </a>
+      ) : (
+        <Fill text={title} />
+      )}
+    </h3>
+    {notes.map((note) => (
+      <p class="note mono">
+        <Fill text={note} />
+      </p>
+    ))}
+    <p class="summary">
+      <Fill text={summary} />
+    </p>
+    {href && (
+      <span class="cta mono" aria-hidden="true">
+        read the lab report →
+      </span>
+    )}
+  </div>
+  {lines.length > 0 && (
+    <div class="terminal mono" aria-hidden="true">
+      {lines.map((line) => (
+        <p class:list={[line.kind, { continued: line.continued, payoff: line.payoff }]}>
+          <Fill text={line.text} />
+        </p>
+      ))}
+    </div>
+  )}
+</article>
+
+<style>
+  .featured {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 24px;
+    border: 3px solid var(--bp-ink);
+    background: var(--bp-deep);
+    color: var(--bp-ink);
+    transition:
+      transform 0.15s,
+      box-shadow 0.15s;
+  }
+
+  .featured.linked:hover,
+  .featured.linked:has(a:focus-visible) {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--accent);
+  }
+
+  .featured.linked:has(a:focus-visible) {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+  }
+
+  h3 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  h3 a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  h3 a:focus-visible {
+    outline: none;
+  }
+
+  .info {
+    min-width: 0;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .kicker {
+    margin: 0;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--bp-muted-2);
+  }
+
+  .status {
+    color: var(--accent);
+  }
+
+  h3 {
+    margin: 0;
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .note {
+    margin: 0;
+    font-size: 13px;
+    color: var(--bp-muted-2);
+  }
+
+  .summary {
+    margin: 0;
+    max-width: 520px;
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--bp-muted);
+  }
+
+  .cta {
+    margin-top: auto;
+    padding-top: 12px;
+    font-size: 15px;
+    color: var(--accent);
+  }
+
+  .terminal {
+    min-width: 0;
+    padding: 32px;
+    border-left: 3px solid var(--bp-ink);
+    background: var(--bp-deeper);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    font-size: 15px;
+    overflow-wrap: anywhere;
+  }
+
+  .terminal p {
+    margin: 0;
+  }
+
+  .cmd {
+    color: var(--bp-muted-2);
+  }
+
+  .continued {
+    padding-left: 24px;
+  }
+
+  .out {
+    color: var(--bp-ink);
+  }
+
+  .cmd + .out {
+    margin-top: 8px;
+  }
+
+  .payoff {
+    color: var(--accent);
+  }
+
+  @media (max-width: 720px) {
+    .featured {
+      grid-template-columns: 1fr;
+    }
+
+    .info,
+    .terminal {
+      padding: 24px;
+    }
+
+    .terminal {
+      border-left: 0;
+      border-top: 3px solid var(--bp-ink);
+      font-size: 13px; /* keeps the command's trailing "\" on its line at 360px */
+    }
+  }
+</style>

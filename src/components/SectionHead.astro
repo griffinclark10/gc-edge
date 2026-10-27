@@ -1,0 +1,42 @@
+---
+interface Props {
+  /** id for the h2, so the section can be aria-labelledby it */
+  id: string;
+  title: string;
+  /** mono side note, right-aligned on wide screens */
+  note?: string;
+}
+
+const { id, title, note } = Astro.props;
+---
+
+<div class="section-head">
+  <h2 id={id}>{title}</h2>
+  {note && <p class="mono">{note}</p>}
+</div>
+
+<style>
+  .section-head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 40px;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 48px;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: var(--fs-h2);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  p {
+    margin: 0;
+    max-width: 360px;
+    font-size: 14px;
+    color: var(--fg-muted);
+  }
+</style>

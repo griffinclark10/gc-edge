@@ -1,0 +1,37 @@
+---
+id: '007'
+slug: distill-to-esp32
+title: 'Tell a $10 chip what to see.'
+kicker: 'EXP. 007 · OPEN SOURCE · IN PROGRESS'
+status: in-progress
+featured: true
+order: 1
+summary: "An open-source autodistill target for ESP32-class microcontrollers. A foundation model labels raw footage, a sub-1M-parameter detector trains on those labels, gets INT8-quantised and is flashed to the chip. Then the chip sends back the frames it isn't sure about."
+notes:
+  - '[CONFIRM: board price for the dev board actually used]'
+terminal:
+  - '$ distill "coffee mugs on a desk" \'
+  - '--target esp32-s3 --flash'
+  - '✓ labelled [N] frames'
+  - '✓ trained · int8 · [SIZE] KB'
+  - '✓ flashed → /dev/ttyUSB0'
+tags:
+  - autodistill
+  - ESP-Detection
+  - INT8 quantisation
+  - ESP32-S3 / ESP32-P4
+  - knowledge distillation
+  - OTA
+hasPage: true
+# Spec §6.4 draft gate: the card shows now; the case study stays out of production
+# until prompt → flashed chip works end to end.
+pageDraft: true
+draft: false
+specimen:
+  target: 'ESP32-S3 / ESP32-P4'
+  teacher: '[FILL]'
+  student: '[FILL params] · int8'
+  built on: 'autodistill, ESP-Detection'
+  license: '[FILL]'
+  repo: 'github.com/griffinclark10/[FILL]'
+---
