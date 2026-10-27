@@ -1,0 +1,86 @@
+---
+import Button from './Button.astro';
+import { SITE } from '../lib/site';
+---
+
+<footer id="signal" class="signal">
+  <div class="container inner">
+    <p class="eyebrow">transmitter · open channel</p>
+    <h2>
+      Send a<br />
+      <span>signal.</span>
+    </h2>
+    <div class="actions">
+      <Button href={`mailto:${SITE.email}`} variant="accent">
+        {SITE.email}
+      </Button>
+      <Button href={SITE.github}>github</Button>
+      <Button href={SITE.linkedin}>linkedin</Button>
+      <Button href={SITE.resume}>résumé.pdf</Button>
+    </div>
+    <div class="colophon mono">
+      <span>© 2026 Griffin Clark · Vancouver, BC · drawn to scale, mostly</span>
+      <span>this page ran 0 inferences on you. probably.</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .signal {
+    margin-top: var(--section-pad);
+    background: var(--bp-deep);
+    color: var(--bp-ink);
+    border-top: 3px solid var(--bp-ink);
+  }
+
+  .inner {
+    padding-top: 96px;
+    padding-bottom: 40px;
+  }
+
+  .eyebrow {
+    margin-bottom: 20px;
+    color: var(--bp-muted-2);
+  }
+
+  h2 {
+    margin: 0;
+    font-size: clamp(48px, 9vw, 120px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 0.92;
+  }
+
+  h2 span {
+    color: var(--accent);
+  }
+
+  .actions {
+    margin-top: 48px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .colophon {
+    margin-top: 96px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--bp-rule);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 32px;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--bp-muted-2);
+  }
+
+  @media (max-width: 720px) {
+    .inner {
+      padding-top: 72px;
+    }
+
+    .colophon {
+      margin-top: 72px;
+    }
+  }
+</style>

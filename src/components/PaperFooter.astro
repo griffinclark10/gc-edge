@@ -1,0 +1,37 @@
+---
+import { SITE } from '../lib/site';
+---
+
+<footer class="paper-footer">
+  <div class="container inner mono">
+    <span>© 2026 Griffin Clark · Vancouver, BC</span>
+    <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+  </div>
+</footer>
+
+<style>
+  .paper-footer {
+    --focus: var(--accent);
+    margin-top: 96px;
+    background: var(--pp-ink);
+    color: var(--bp-muted);
+  }
+
+  .inner {
+    padding-top: 32px;
+    padding-bottom: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 32px;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--accent);
+  }
+</style>

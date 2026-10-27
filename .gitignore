@@ -1,0 +1,13 @@
+dist/
+.astro/
+node_modules/
+.lighthouseci/
+.env
+.env.*
+.DS_Store
+
+# Build brief: kept local only (private notes)
+SPEC.md
+
+# local preview config
+.claude/

@@ -1,0 +1,10 @@
+# Link check for the built site (CI step "Link check").
+max_retries = 2
+timeout = 20
+# LinkedIn answers bots with HTTP 999.
+accept = ["200..=299", "999"]
+exclude = [
+  # [FILL] résumé PDF not supplied yet; remove this line once public/resume.pdf exists.
+  "resume\\.pdf$",
+  "^mailto:",
+]

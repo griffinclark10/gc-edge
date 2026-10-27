@@ -1,0 +1,110 @@
+---
+import { notesAreVisible } from '../lib/site';
+
+interface Props {
+  /** Underlines the matching nav item (paper pages). */
+  current?: 'experiments' | 'notes';
+  /** Logo only, as on the 404 mockup. */
+  minimal?: boolean;
+}
+
+const { current, minimal = false } = Astro.props;
+const showNotes = await notesAreVisible();
+
+const items = [
+  { key: 'experiments', label: 'experiments', href: '/#experiments' },
+  { key: 'worldline', label: 'worldline', href: '/#worldline' },
+  ...(showNotes ? [{ key: 'notes', label: 'field notes', href: '/notes' }] : []),
+];
+---
+
+<header class="site-header container">
+  <a class="logo mono" href="/" aria-label="Griffin Clark, home">
+    gc<span>/</span>edge
+  </a>
+  {!minimal && (
+    <nav aria-label="Primary" class="mono">
+      {items.map((item) => (
+        <a
+          href={item.href}
+          class:list={{ current: current === item.key }}
+          aria-current={current === item.key ? 'page' : undefined}
+        >
+          {item.label}
+        </a>
+      ))}
+      <a href="/#signal" class="cta">
+        send a signal
+      </a>
+    </nav>
+  )}
+</header>
+
+<style>
+  .site-header {
+    padding-top: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--fg);
+    text-decoration: none;
+  }
+
+  .logo span {
+    color: var(--logo-slash);
+  }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    font-size: 14px;
+  }
+
+  nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 14px;
+    color: var(--fg);
+    text-decoration: none;
+  }
+
+  nav a:hover,
+  nav a.current {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
+  }
+
+  nav a.cta {
+    background: var(--ink-fill);
+    color: var(--on-ink-fill);
+  }
+
+  /* keep the three items on one row down to 360px; first link aligns to the gutter */
+  @media (max-width: 479px) {
+    nav {
+      gap: 0;
+      font-size: 13px;
+    }
+
+    nav a {
+      padding: 0 10px;
+    }
+
+    nav a:first-child {
+      margin-left: -10px;
+    }
+  }
+</style>

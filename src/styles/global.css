@@ -1,0 +1,148 @@
+@import './tokens.css';
+@import '@fontsource-variable/bricolage-grotesque/opsz.css';
+@import '@fontsource/ibm-plex-mono/400.css';
+@import '@fontsource/ibm-plex-mono/500.css';
+@import '@fontsource/ibm-plex-mono/600.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-display);
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Surfaces. Components read these semantic variables instead of raw tokens,
+   so the same Button or header works on blueprint and on paper. */
+.surface-blueprint {
+  --ground: var(--bp-ground);
+  --fg: var(--bp-ink);
+  --fg-muted: var(--bp-muted);
+  --line: var(--bp-ink);
+  --grid: var(--bp-grid);
+  --ink-fill: var(--bp-ink);
+  --on-ink-fill: var(--bp-deep);
+  --logo-slash: var(--accent);
+  --focus: var(--accent);
+}
+
+.surface-paper {
+  --ground: var(--pp-ground);
+  --fg: var(--pp-ink);
+  --fg-muted: var(--pp-muted);
+  --line: var(--pp-ink);
+  --grid: var(--pp-grid);
+  --ink-fill: var(--pp-ink);
+  --on-ink-fill: var(--pp-ground);
+  --logo-slash: var(--pp-muted);
+  --focus: var(--pp-ink);
+}
+
+body.surface-blueprint,
+body.surface-paper {
+  background: var(--ground);
+  color: var(--fg);
+}
+
+/* §4.2: the grid lives on the page wrapper so full-bleed bands can cover it. */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--ground);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+}
+
+.page > main {
+  flex: 1;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.eyebrow {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--gutter);
+  top: -100px;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 16px;
+  background: var(--accent);
+  color: var(--bp-deep);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

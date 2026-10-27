@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SignalFooter from '../components/SignalFooter.astro';
+import Button from '../components/Button.astro';
+import DetectionBox from '../components/DetectionBox.astro';
+import { SITE } from '../lib/site';
+
+// M1 shell: header, a bare hero (to exercise DetectionBox and Button) and the footer.
+// Spec sheet, ticker, experiments, worldline and lab bench land in M2.
+---
+
+<BaseLayout title={SITE.homeTitle} surface="blueprint">
+  <SiteHeader />
+  <main id="main">
+    <section id="top" class="container hero">
+      <p class="eyebrow">sheet 01 of 04 · frame 000417 · edge-01 · scale 1:1</p>
+      <h1>
+        <DetectionBox label="person · id 07 · 0.98">Griffin</DetectionBox>
+        <br />
+        <span class="surname">
+          Clark<span class="stop">.</span>
+        </span>
+      </h1>
+      <p class="lede">
+        I make computer vision run on small hardware, and keep it running in the real world.
+        Engineering physicist; currently leading engineering for an edge-AI retail analytics
+        platform deployed in 11+ countries.
+      </p>
+      <div class="actions">
+        <Button href="#experiments" variant="primary">
+          run inference on my work →
+        </Button>
+        <Button href={SITE.resume}>résumé.pdf</Button>
+      </div>
+    </section>
+  </main>
+  <SignalFooter />
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-top: 96px;
+    padding-bottom: 72px;
+  }
+
+  .eyebrow {
+    margin-bottom: 40px;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: var(--fs-display-home);
+    font-weight: 800;
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+  }
+
+  /* room for the detection chip above the first line */
+  h1 :global(.detection) {
+    margin-top: 46px;
+  }
+
+  .surname {
+    display: inline-block;
+    margin-top: 28px;
+  }
+
+  .stop {
+    color: var(--accent);
+  }
+
+  .lede {
+    margin: 48px 0 0;
+    max-width: 620px;
+    font-size: 24px;
+    line-height: 1.4;
+  }
+
+  .actions {
+    margin-top: 36px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  @media (max-width: 720px) {
+    .hero {
+      padding-top: 72px;
+    }
+
+    .lede {
+      font-size: 22px;
+    }
+  }
+</style>

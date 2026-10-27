@@ -1,0 +1,47 @@
+---
+interface Props {
+  /** Chip text, e.g. "person · id 07 · 0.98". */
+  label: string;
+}
+
+const { label } = Astro.props;
+---
+
+<span class="detection">
+  <slot />
+  <span class="box" aria-hidden="true"></span>
+  <span class="chip mono" aria-hidden="true">
+    {label}
+  </span>
+</span>
+
+<style>
+  .detection {
+    /* box outset; never wider than the page gutter, so it can't clip at 360px */
+    --dx: min(22px, var(--gutter) - 4px);
+    --dy: 14px;
+    position: relative;
+    display: inline-block;
+  }
+
+  .box {
+    position: absolute;
+    inset: calc(-1 * var(--dy)) calc(-1 * var(--dx));
+    border: 3px solid var(--accent);
+    pointer-events: none;
+  }
+
+  .chip {
+    position: absolute;
+    left: calc(-1 * var(--dx));
+    bottom: calc(100% + var(--dy));
+    padding: 4px 10px;
+    background: var(--accent);
+    color: var(--bp-deep);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+</style>

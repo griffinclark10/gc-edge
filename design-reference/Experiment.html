@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Exp. 007 — Tell a $10 chip what to see</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F6FC}
+a{color:#1C3D96}a:hover{color:#0F2560}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+</style>
+</helmet>
+
+<div style="font-family: 'Bricolage Grotesque', system-ui, sans-serif; color: #1C3D96; background-color: #F4F6FC; background-image: linear-gradient(rgba(28,61,150,0.09) 1px, transparent 1px), linear-gradient(90deg, rgba(28,61,150,0.09) 1px, transparent 1px); background-size: 32px 32px; min-height: 100%;">
+
+<!-- TOP BAR -->
+<header style="max-width: 1200px; margin: 0 auto; padding: 24px 24px 0; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between;">
+<a href="Main.dc.html" class="mono" style="font-weight: 600; font-size: 18px; color: #1C3D96; text-decoration: none; padding: 10px 0;">gc<span style="color: #4A5E96;">/</span>edge</a>
+<nav aria-label="Primary" class="mono" style="display: flex; flex-wrap: wrap; gap: 4px; font-size: 14px;">
+<a href="Main.dc.html" style="padding: 12px 14px; color: #1C3D96; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px;">experiments</a>
+<a href="Main.dc.html" style="padding: 12px 14px; color: #1C3D96; text-decoration: none;">worldline</a>
+<a href="Notes.dc.html" style="padding: 12px 14px; color: #1C3D96; text-decoration: none;">field notes</a>
+<a href="Main.dc.html" style="padding: 12px 14px; color: #F4F6FC; background: #1C3D96; text-decoration: none;">send a signal</a>
+</nav>
+</header>
+
+<!-- HERO -->
+<section style="max-width: 1200px; margin: 0 auto; padding: 72px 24px 56px;">
+<p class="mono" style="margin: 0 0 28px; font-size: 13px; color: #4A5E96;"><a href="Main.dc.html" style="color: #4A5E96;">experiments</a> / 007</p>
+<div style="display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-start;">
+<div style="flex: 999 1 560px; min-width: 0;">
+<p class="mono" style="margin: 0 0 20px; display: inline-flex; gap: 10px; align-items: center; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; padding: 6px 12px; background: #FFD23F; color: #1C3D96;">STATUS: IN PROGRESS · RESULTS PENDING</p>
+<h1 style="margin: 0; font-weight: 800; font-size: clamp(52px, 8vw, 104px); line-height: 0.92; letter-spacing: -0.04em;">Tell a $10 chip what to see.</h1>
+<p style="margin: 32px 0 0; max-width: 640px; font-size: 22px; line-height: 1.45;">An open-source autodistill target that turns a sentence into a detector running on an ESP32 — plus a study of what the big model's mistakes do to a model a thousand times smaller.</p>
+</div>
+
+<!-- specimen card -->
+<aside aria-label="Specimen card" style="flex: 1 1 300px; min-width: 0; max-width: 380px; border: 3px solid #1C3D96; background: #FFFFFF;">
+<p class="mono" style="margin: 0; padding: 12px 18px; border-bottom: 3px solid #1C3D96; font-size: 12px; letter-spacing: 0.1em; background: #1C3D96; color: #F4F6FC;">SPECIMEN · EXP. 007</p>
+<dl class="mono" style="margin: 0; padding: 18px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); row-gap: 12px; column-gap: 12px; font-size: 14px;">
+<dt style="color: #4A5E96;">target</dt><dd style="margin: 0;">ESP32-S3 / ESP32-P4</dd>
+<dt style="color: #4A5E96;">teacher</dt><dd style="margin: 0;">[FOUNDATION MODEL]</dd>
+<dt style="color: #4A5E96;">student</dt><dd style="margin: 0;">[PARAMS] · int8</dd>
+<dt style="color: #4A5E96;">built on</dt><dd style="margin: 0;">autodistill, ESP-Detection</dd>
+<dt style="color: #4A5E96;">license</dt><dd style="margin: 0;">[LICENSE]</dd>
+<dt style="color: #4A5E96;">repo</dt><dd style="margin: 0;"><a href="https://github.com/griffinclark10">github.com/griffinclark10/[REPO]</a></dd>
+</dl>
+</aside>
+</div>
+</section>
+
+<!-- PIPELINE -->
+<section aria-labelledby="pipe-h" style="background: #1C3D96; color: #F4F6FC; border-top: 3px solid #1C3D96; border-bottom: 3px solid #1C3D96;">
+<div style="max-width: 1200px; margin: 0 auto; padding: 72px 24px;">
+<p class="mono" style="margin: 0 0 12px; font-size: 13px; letter-spacing: 0.08em; color: #C9D4F5;">FIG. 1 · APPARATUS</p>
+<h2 id="pipe-h" style="margin: 0 0 40px; font-size: clamp(32px, 4vw, 48px); font-weight: 800; letter-spacing: -0.02em;">From a sentence to a flashed chip</h2>
+<ol class="mono" style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; font-size: 14px;">
+<li style="border: 2px solid #F4F6FC; padding: 16px; min-height: 120px; display: flex; flex-direction: column; gap: 8px;"><span style="color: #C9D4F5;">01 · prompt</span><span style="font-size: 16px;">"coffee mugs on a desk"</span></li>
+<li style="border: 2px solid #F4F6FC; padding: 16px; min-height: 120px; display: flex; flex-direction: column; gap: 8px;"><span style="color: #C9D4F5;">02 · teacher</span><span style="font-size: 16px;">foundation model labels raw footage</span></li>
+<li style="border: 2px solid #F4F6FC; padding: 16px; min-height: 120px; display: flex; flex-direction: column; gap: 8px;"><span style="color: #C9D4F5;">03 · student</span><span style="font-size: 16px;">tiny detector trains on those labels</span></li>
+<li style="border: 2px solid #F4F6FC; padding: 16px; min-height: 120px; display: flex; flex-direction: column; gap: 8px;"><span style="color: #C9D4F5;">04 · squeeze</span><span style="font-size: 16px;">int8 quantisation, calibrated</span></li>
+<li style="border: 2px solid #FFD23F; background: #FFD23F; color: #1C3D96; padding: 16px; min-height: 120px; display: flex; flex-direction: column; gap: 8px;"><span style="font-weight: 600;">05 · flash</span><span style="font-size: 16px;">runs on the chip, offline</span></li>
+</ol>
+<div class="mono" style="margin-top: 12px; border: 2px dashed #FFD23F; padding: 14px 16px; display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; font-size: 14px;">
+<span style="color: #FFD23F; font-weight: 600;">06 · feedback loop ↺</span>
+<span style="color: #DCE3FA;">frames the chip is unsure about go back to the teacher, get relabelled, and the next model ships over the air</span>
+</div>
+</div>
+</section>
+
+<!-- HYPOTHESIS -->
+<section style="max-width: 1200px; margin: 0 auto; padding: 96px 24px 24px;">
+<div style="display: flex; flex-wrap: wrap; gap: 48px;">
+<div style="flex: 1 1 320px; min-width: 0;">
+<p class="mono" style="margin: 0 0 12px; font-size: 13px; letter-spacing: 0.08em; color: #4A5E96;">§1 · HYPOTHESIS</p>
+<p style="margin: 0; font-size: clamp(28px, 3.4vw, 40px); font-weight: 600; line-height: 1.15; letter-spacing: -0.01em;">Foundation models mislabel things. A model a thousand times smaller has no capacity to ignore those mistakes — so it learns them.</p>
+</div>
+<div style="flex: 1 1 320px; min-width: 0;">
+<p class="mono" style="margin: 0 0 12px; font-size: 13px; letter-spacing: 0.08em; color: #4A5E96;">§2 · QUESTIONS</p>
+<ol style="margin: 0; padding-left: 28px; display: flex; flex-direction: column; gap: 16px; font-size: 19px; line-height: 1.45;">
+<li>How much accuracy does a microcontroller detector lose when trained on teacher labels instead of human ones?</li>
+<li>Does that gap shrink or grow as the student gets smaller?</li>
+<li>How many frames does the feedback loop need to send back to close it?</li>
+</ol>
+</div>
+</div>
+</section>
+
+<!-- RESULTS -->
+<section style="max-width: 1200px; margin: 0 auto; padding: 72px 24px 24px;">
+<p class="mono" style="margin: 0 0 12px; font-size: 13px; letter-spacing: 0.08em; color: #4A5E96;">§3 · RESULTS</p>
+<h2 style="margin: 0 0 32px; font-size: clamp(32px, 4vw, 48px); font-weight: 800; letter-spacing: -0.02em;">Measured on real chips</h2>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px;">
+<div style="border: 2px solid #1C3D96; background: #FFFFFF; padding: 20px;">
+<p class="mono" style="margin: 0; font-size: 12px; color: #4A5E96;">ACCURACY · mAP@0.5</p>
+<p style="margin: 8px 0 0; font-size: 44px; font-weight: 800;">[—]</p>
+<p class="mono" style="margin: 4px 0 0; font-size: 13px; color: #4A5E96;">vs human labels: [Δ]</p>
+</div>
+<div style="border: 2px solid #1C3D96; background: #FFFFFF; padding: 20px;">
+<p class="mono" style="margin: 0; font-size: 12px; color: #4A5E96;">LATENCY · per frame</p>
+<p style="margin: 8px 0 0; font-size: 44px; font-weight: 800;">[—] ms</p>
+<p class="mono" style="margin: 4px 0 0; font-size: 13px; color: #4A5E96;">ESP32-S3, incl. pre/post</p>
+</div>
+<div style="border: 2px solid #1C3D96; background: #FFFFFF; padding: 20px;">
+<p class="mono" style="margin: 0; font-size: 12px; color: #4A5E96;">ENERGY · per inference</p>
+<p style="margin: 8px 0 0; font-size: 44px; font-weight: 800;">[—] mJ</p>
+<p class="mono" style="margin: 4px 0 0; font-size: 13px; color: #4A5E96;">measured at the supply rail</p>
+</div>
+<div style="border: 2px solid #1C3D96; background: #FFFFFF; padding: 20px;">
+<p class="mono" style="margin: 0; font-size: 12px; color: #4A5E96;">MODEL · on flash</p>
+<p style="margin: 8px 0 0; font-size: 44px; font-weight: 800;">[—] KB</p>
+<p class="mono" style="margin: 4px 0 0; font-size: 13px; color: #4A5E96;">int8 weights</p>
+</div>
+</div>
+
+<!-- empty plot -->
+<figure style="margin: 0; border: 2px solid #1C3D96; background: #FFFFFF; padding: 24px;">
+<div style="display: flex; gap: 16px; align-items: stretch;">
+<p class="mono" style="margin: 0; writing-mode: vertical-rl; transform: rotate(180deg); font-size: 13px; color: #4A5E96; text-align: center;">student mAP@0.5</p>
+<div style="flex: 1; min-width: 0; height: 340px; border-left: 2px solid #1C3D96; border-bottom: 2px solid #1C3D96; background-image: linear-gradient(rgba(28,61,150,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(28,61,150,0.1) 1px, transparent 1px); background-size: 48px 48px; display: flex; align-items: center; justify-content: center;">
+<div style="position: relative; border: 3px dashed #1C3D96; padding: 28px 36px; background: #FFFFFF;">
+<span class="mono" style="position: absolute; top: -30px; left: -3px; background: #FFD23F; color: #1C3D96; font-size: 13px; font-weight: 600; padding: 3px 8px; white-space: nowrap;">data · n = 0 · 0.00</span>
+<p class="mono" style="margin: 0; font-size: 15px; text-align: center;">no results detected yet.<br>check back after the experiment runs.</p>
+</div>
+</div>
+</div>
+<figcaption class="mono" style="margin: 14px 0 0 32px; font-size: 13px; color: #4A5E96;">FIG. 2 · teacher label noise (%) → · one line per student size · error bars = [N] seeds</figcaption>
+</figure>
+</section>
+
+<!-- LAB LOG -->
+<section style="max-width: 1200px; margin: 0 auto; padding: 96px 24px 24px;">
+<p class="mono" style="margin: 0 0 12px; font-size: 13px; letter-spacing: 0.08em; color: #4A5E96;">§4 · LAB LOG</p>
+<h2 style="margin: 0 0 32px; font-size: clamp(32px, 4vw, 48px); font-weight: 800; letter-spacing: -0.02em;">What happened, in order</h2>
+<ol style="list-style: none; margin: 0; padding: 0; border-left: 3px solid #1C3D96;">
+<li style="padding: 0 0 28px 28px; position: relative;">
+<span aria-hidden="true" style="position: absolute; left: -10px; top: 6px; width: 14px; height: 14px; border: 2px solid #1C3D96; background: #F4F6FC;"></span>
+<p class="mono" style="margin: 0; font-size: 13px; color: #4A5E96;">[DATE] · <span style="background: #1C3D96; color: #F4F6FC; padding: 1px 6px;">PLANNED</span></p>
+<h3 style="margin: 4px 0 4px; font-size: 22px;">First prompt-to-flash run, end to end</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.5; max-width: 640px;">[What worked, what broke, what surprised you.]</p>
+</li>
+<li style="padding: 0 0 28px 28px; position: relative;">
+<span aria-hidden="true" style="position: absolute; left: -10px; top: 6px; width: 14px; height: 14px; border: 2px solid #1C3D96; background: #F4F6FC;"></span>
+<p class="mono" style="margin: 0; font-size: 13px; color: #4A5E96;">[DATE] · <span style="background: #1C3D96; color: #F4F6FC; padding: 1px 6px;">PLANNED</span></p>
+<h3 style="margin: 4px 0 4px; font-size: 22px;">Label-noise study across four tasks</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.5; max-width: 640px;">[Findings, with the chart above filled in.]</p>
+</li>
+<li style="padding: 0 0 0 28px; position: relative;">
+<span aria-hidden="true" style="position: absolute; left: -10px; top: 6px; width: 14px; height: 14px; border: 2px solid #1C3D96; background: #F4F6FC;"></span>
+<p class="mono" style="margin: 0; font-size: 13px; color: #4A5E96;">[DATE] · <span style="background: #1C3D96; color: #F4F6FC; padding: 1px 6px;">PLANNED</span></p>
+<h3 style="margin: 4px 0 4px; font-size: 22px;">Closing the loop over the air</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.5; max-width: 640px;">[How many returned frames it took to close the gap.]</p>
+</li>
+</ol>
+</section>
+
+<!-- REPRODUCE -->
+<section style="max-width: 1200px; margin: 0 auto; padding: 96px 24px 24px;">
+<p class="mono" style="margin: 0 0 12px; font-size: 13px; letter-spacing: 0.08em; color: #4A5E96;">§5 · REPRODUCE IT</p>
+<h2 style="margin: 0 0 32px; font-size: clamp(32px, 4vw, 48px); font-weight: 800; letter-spacing: -0.02em;">Run it on your own desk</h2>
+<div class="mono" style="background: #1C3D96; color: #F4F6FC; padding: 28px; font-size: 15px; line-height: 1.9; overflow-x: auto; box-shadow: 8px 8px 0 #FFD23F;">
+<p style="margin: 0; color: #C9D4F5;"># planned interface — subject to change</p>
+<p style="margin: 0; white-space: nowrap;">$ pip install [PACKAGE-NAME]</p>
+<p style="margin: 0; white-space: nowrap;">$ distill "birds at the feeder" --video ./feeder.mp4 --target esp32-s3</p>
+<p style="margin: 0; white-space: nowrap;">$ distill flash --port /dev/ttyUSB0</p>
+</div>
+<div style="margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px;">
+<a href="https://github.com/griffinclark10" class="mono" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; background: #1C3D96; color: #F4F6FC; text-decoration: none; font-size: 15px;">view the repo →</a>
+<a href="Notes.dc.html" class="mono" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; border: 2px solid #1C3D96; color: #1C3D96; text-decoration: none; font-size: 15px;">read the write-up</a>
+</div>
+</section>
+
+<!-- PREV / NEXT -->
+<nav aria-label="More experiments" style="max-width: 1200px; margin: 0 auto; padding: 96px 24px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+<a href="Main.dc.html" style="display: block; border: 2px solid #1C3D96; padding: 24px; color: #1C3D96; text-decoration: none; background: #FFFFFF;">
+<span class="mono" style="font-size: 13px; color: #4A5E96;">← previous · EXP. 006</span>
+<span style="display: block; margin-top: 6px; font-size: 24px; font-weight: 600;">An LLM that teaches words</span>
+</a>
+<a href="Main.dc.html" style="display: block; border: 2px solid #1C3D96; padding: 24px; color: #1C3D96; text-decoration: none; background: #FFFFFF; text-align: right;">
+<span class="mono" style="font-size: 13px; color: #4A5E96;">next · EXP. 001 →</span>
+<span style="display: block; margin-top: 6px; font-size: 24px; font-weight: 600;">Cooperative perception</span>
+</a>
+</nav>
+
+<!-- FOOTER -->
+<footer style="margin-top: 96px; background: #1C3D96; color: #C9D4F5;">
+<div class="mono" style="max-width: 1200px; margin: 0 auto; padding: 32px 24px; display: flex; flex-wrap: wrap; gap: 12px 32px; justify-content: space-between; font-size: 13px;">
+<span>© 2026 Griffin Clark · Vancouver, BC</span>
+<a href="mailto:griffinclark10@gmail.com" style="color: #FFD23F;">griffinclark10@gmail.com</a>
+</div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#FFD23F","options":["#FFD23F","#FF8A3D","#8FE3FF","#C6F432"]},"$preview":{"width":1440,"height":5000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#FFD23F' };
+  }
+}
+</script>
+</body>
+</html>

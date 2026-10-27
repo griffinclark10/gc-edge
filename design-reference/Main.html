@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Griffin Clark — Field Notes from the Edge</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#1C3D96}
+a{color:#8FE3FF}a:hover{color:#FFFFFF}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+.box{position:absolute;inset:-14px -22px;border:3px solid #FFD23F;pointer-events:none}
+.card:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 #FFD23F}
+</style>
+</helmet>
+
+<div style="font-family: 'Bricolage Grotesque', system-ui, sans-serif; color: #F2F5FF; background-color: #1C3D96; background-image: linear-gradient(rgba(242,245,255,0.11) 1px, transparent 1px), linear-gradient(90deg, rgba(242,245,255,0.11) 1px, transparent 1px); background-size: 32px 32px; min-height: 100%;">
+
+<!-- TOP BAR -->
+<header style="max-width: 1200px; margin: 0 auto; padding: 24px 24px 0; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between;">
+<a href="#top" class="mono" style="font-weight: 600; font-size: 18px; color: #F2F5FF; text-decoration: none; padding: 10px 0;">gc<span style="color: #FFD23F;">/</span>edge</a>
+<nav aria-label="Primary" class="mono" style="display: flex; flex-wrap: wrap; gap: 4px; font-size: 14px;">
+<a href="#experiments" style="padding: 12px 14px; color: #F2F5FF; text-decoration: none;">experiments</a>
+<a href="#worldline" style="padding: 12px 14px; color: #F2F5FF; text-decoration: none;">worldline</a>
+<a href="Notes.dc.html" style="padding: 12px 14px; color: #F2F5FF; text-decoration: none;">field notes</a>
+<a href="#signal" style="padding: 12px 14px; color: #0F2560; background: #F2F5FF; text-decoration: none;">send a signal</a>
+</nav>
+</header>
+
+<!-- HERO -->
+<section id="top" style="max-width: 1200px; margin: 0 auto; padding: 96px 24px 72px; display: flex; flex-wrap: wrap; gap: 56px; align-items: flex-end;">
+<div style="flex: 999 1 560px; min-width: 0;">
+<p class="mono" style="margin: 0 0 40px; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: #C9D4F5;">sheet 01 of 04 · frame 000417 · edge-01 · scale 1:1</p>
+<h1 style="margin: 0; font-weight: 800; font-size: clamp(64px, 11vw, 148px); line-height: 0.88; letter-spacing: -0.04em;">
+<span style="position: relative; display: inline-block;">Griffin
+<span class="box" aria-hidden="true" style="border-color: #FFD23F;"></span>
+<span class="mono" aria-hidden="true" style="position: absolute; top: -46px; left: -22px; background: #FFD23F; color: #0F2560; font-size: 14px; font-weight: 600; letter-spacing: 0; padding: 4px 10px; white-space: nowrap;">person · id 07 · 0.98</span>
+</span><br>
+<span style="display: inline-block; margin-top: 28px;">Clark<span style="color: #FFD23F;">.</span></span>
+</h1>
+<p style="margin: 48px 0 0; max-width: 620px; font-size: 24px; line-height: 1.4;">I teach small computers to see. Engineering physicist turned edge-AI engineer, putting computer vision on devices the size of a paperback and shipping them to stores in 11+ countries.</p>
+<div style="margin-top: 36px; display: flex; flex-wrap: wrap; gap: 12px;">
+<a href="#experiments" class="mono" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; background: #F2F5FF; color: #0F2560; text-decoration: none; font-size: 15px; font-weight: 600;">run inference on my work →</a>
+<a href="#signal" class="mono" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; border: 2px solid #F2F5FF; color: #F2F5FF; text-decoration: none; font-size: 15px;">résumé.pdf</a>
+</div>
+</div>
+
+<!-- spec sheet -->
+<aside aria-label="Spec sheet" style="flex: 1 1 300px; min-width: 0; max-width: 380px; background: #0F2560; color: #F2F5FF; border: 2px solid #F2F5FF; padding: 24px 24px 20px; transform: rotate(1.5deg); box-shadow: 8px 8px 0 #FFD23F;">
+<p class="mono" style="margin: 0 0 18px; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #9FB2E8;">datasheet · rev 2026.10</p>
+<dl class="mono" style="margin: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); row-gap: 12px; column-gap: 12px; font-size: 14px;">
+<dt style="color: #9FB2E8;">model</dt><dd style="margin: 0;">G. Clark, B.Eng.Phys</dd>
+<dt style="color: #9FB2E8;">role</dt><dd style="margin: 0;">VP Engineering</dd>
+<dt style="color: #9FB2E8;">target hw</dt><dd style="margin: 0;">NVIDIA Jetson, cloud, whiteboards</dd>
+<dt style="color: #9FB2E8;">precision</dt><dd style="margin: 0;">INT8 models, FP64 opinions</dd>
+<dt style="color: #9FB2E8;">base station</dt><dd style="margin: 0;">Vancouver, BC</dd>
+<dt style="color: #9FB2E8;">fuel</dt><dd style="margin: 0;">[YOUR VICE]</dd>
+</dl>
+<p class="mono" style="margin: 20px 0 0; padding-top: 14px; border-top: 1px dashed #4A64B0; font-size: 12px; color: #9FB2E8;">⚠ do not operate near unlabelled ground truth</p>
+</aside>
+</section>
+
+<!-- TICKER -->
+<div aria-hidden="true" class="mono" style="background: #FFD23F; color: #0F2560; border-top: 3px solid #0F2560; border-bottom: 3px solid #0F2560; overflow: hidden; white-space: nowrap; font-size: 16px; font-weight: 500; padding: 14px 0;">
+<span style="padding-left: 24px;">Δx·Δp ≥ ħ/2 &nbsp;✦&nbsp; AP@0.5 = 0.772 &nbsp;✦&nbsp; F = ma (m = 8 GB) &nbsp;✦&nbsp; all models are wrong, some ship &nbsp;✦&nbsp; ∇·E = ρ/ε₀ &nbsp;✦&nbsp; latency is a feeling &nbsp;✦&nbsp; Δx·Δp ≥ ħ/2 &nbsp;✦&nbsp; AP@0.5 = 0.772</span>
+</div>
+
+<!-- EXPERIMENTS -->
+<section id="experiments" style="max-width: 1200px; margin: 0 auto; padding: 112px 24px 40px;">
+<div style="display: flex; flex-wrap: wrap; gap: 16px 40px; align-items: baseline; justify-content: space-between; margin-bottom: 48px;">
+<h2 style="margin: 0; font-size: clamp(40px, 6vw, 72px); font-weight: 800; letter-spacing: -0.03em; line-height: 1;">Selected experiments</h2>
+<p class="mono" style="margin: 0; font-size: 14px; color: #C9D4F5; max-width: 360px;">n = 7 · results reproducible on request · error bars available upon interrogation</p>
+</div>
+
+<!-- FEATURED 007 -->
+<a href="Experiment.dc.html" class="card" style="display: flex; flex-wrap: wrap; margin-bottom: 24px; border: 3px solid #F2F5FF; background: #0F2560; color: #F2F5FF; text-decoration: none; transition: transform .15s, box-shadow .15s;">
+<div style="flex: 1 1 320px; min-width: 0; padding: 32px; display: flex; flex-direction: column; gap: 14px;">
+<p class="mono" style="margin: 0; font-size: 12px; letter-spacing: 0.08em; color: #9FB2E8;">EXP. 007 · OPEN SOURCE · <span style="color: #FFD23F;">IN PROGRESS</span></p>
+<h3 style="margin: 0; font-size: clamp(32px, 4vw, 48px); line-height: 1; letter-spacing: -0.02em;">Tell a $10 chip what to see.</h3>
+<p style="margin: 0; font-size: 18px; line-height: 1.5; max-width: 520px; color: #C9D4F5;">Type a sentence. A foundation model labels the footage, a 0.4M-parameter detector learns from it, and a microcontroller starts counting. Then it asks for help on the frames it isn't sure about.</p>
+<span class="mono" style="margin-top: auto; padding-top: 12px; font-size: 15px; color: #FFD23F;">read the lab report →</span>
+</div>
+<div aria-hidden="true" style="flex: 1 1 320px; min-width: 0; border-left: 3px solid #F2F5FF; background: #0A1B47; padding: 32px; display: flex; flex-direction: column; justify-content: center; gap: 10px;">
+<p class="mono" style="margin: 0; font-size: 15px; color: #9FB2E8;">$ distill "coffee mugs on a desk" \</p>
+<p class="mono" style="margin: 0; padding-left: 24px; font-size: 15px; color: #9FB2E8;">--target esp32-s3 --flash</p>
+<p class="mono" style="margin: 8px 0 0; font-size: 15px; color: #F2F5FF;">✓ labelled [N] frames</p>
+<p class="mono" style="margin: 0; font-size: 15px; color: #F2F5FF;">✓ trained · int8 · [SIZE] KB</p>
+<p class="mono" style="margin: 0; font-size: 15px; color: #FFD23F;">✓ flashed → /dev/ttyUSB0</p>
+</div>
+</a>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 24px;">
+
+<!-- 001 -->
+<article class="card" style="background: #F4F6FC; color: #0F2560; border: 3px solid #F2F5FF; transition: transform .15s, box-shadow .15s; display: flex; flex-direction: column;">
+<div style="height: 180px; border-bottom: 3px solid #0F2560; background: #0F2560; overflow: hidden;">
+<svg viewBox="0 0 340 180" width="100%" height="180" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+<g stroke="#2A4A9E" stroke-width="1"><path d="M0 30H340M0 60H340M0 90H340M0 120H340M0 150H340M40 0V180M80 0V180M120 0V180M160 0V180M200 0V180M240 0V180M280 0V180M320 0V180"/></g>
+<g fill="#8FE3FF"><circle cx="58" cy="78" r="2"/><circle cx="64" cy="84" r="2"/><circle cx="71" cy="76" r="2"/><circle cx="66" cy="94" r="2"/><circle cx="210" cy="112" r="2"/><circle cx="218" cy="105" r="2"/><circle cx="226" cy="118" r="2"/><circle cx="214" cy="124" r="2"/><circle cx="140" cy="48" r="2"/><circle cx="148" cy="44" r="2"/><circle cx="154" cy="52" r="2"/></g>
+<rect x="42" y="64" width="44" height="44" fill="none" stroke="#FFD23F" stroke-width="2.5"/>
+<rect x="196" y="96" width="46" height="40" fill="none" stroke="#FFD23F" stroke-width="2.5"/>
+<rect x="128" y="36" width="38" height="28" fill="none" stroke="#F2F5FF" stroke-width="2.5" stroke-dasharray="5 4"/>
+<path d="M300 10 L300 170" stroke="#9FB2E8" stroke-width="2" stroke-dasharray="2 6"/>
+<text x="292" y="24" fill="#9FB2E8" font-family="IBM Plex Mono" font-size="11" text-anchor="end">V2I fusion</text>
+</svg>
+</div>
+<div style="padding: 22px 22px 24px; display: flex; flex-direction: column; gap: 12px; flex: 1;">
+<p class="mono" style="margin: 0; font-size: 12px; color: #4A5E96; letter-spacing: 0.06em;">EXP. 001 · THESIS · QUEEN'S</p>
+<h3 style="margin: 0; font-size: 26px; line-height: 1.1;">Cooperative perception for autonomous vehicles</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.5; color: #26386E;">Cars that borrow the roadside's eyes. PointPillars feature extraction with vehicle-to-infrastructure fusion on the DAIR-V2X dataset — 300 GB of LiDAR, one supercomputer cluster.</p>
+<p class="mono" style="margin: auto 0 0; padding-top: 12px; font-size: 14px; font-weight: 600;">result: AP@0.5 = 0.772</p>
+</div>
+</article>
+
+<!-- 002 -->
+<article class="card" style="background: #F4F6FC; color: #0F2560; border: 3px solid #F2F5FF; transition: transform .15s, box-shadow .15s; display: flex; flex-direction: column;">
+<div style="height: 180px; border-bottom: 3px solid #0F2560; background: #0F2560; overflow: hidden;">
+<svg viewBox="0 0 340 180" width="100%" height="180" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+<rect x="250" y="20" width="70" height="140" fill="none" stroke="#F2F5FF" stroke-width="2.5"/>
+<text x="285" y="96" fill="#F2F5FF" font-family="IBM Plex Mono" font-size="12" text-anchor="middle">BAR</text>
+<g fill="none" stroke="#F2F5FF" stroke-width="2"><circle cx="228" cy="92" r="9"/><circle cx="198" cy="96" r="9"/><circle cx="170" cy="90" r="9"/><circle cx="142" cy="95" r="9"/><circle cx="114" cy="91" r="9"/><circle cx="86" cy="96" r="9"/><circle cx="58" cy="92" r="9"/><circle cx="30" cy="95" r="9"/></g>
+<g fill="#FFD23F"><circle cx="228" cy="92" r="3"/><circle cx="198" cy="96" r="3"/><circle cx="170" cy="90" r="3"/><circle cx="142" cy="95" r="3"/><circle cx="114" cy="91" r="3"/><circle cx="86" cy="96" r="3"/><circle cx="58" cy="92" r="3"/><circle cx="30" cy="95" r="3"/></g>
+<rect x="14" y="140" width="150" height="26" fill="#FFD23F"/>
+<text x="24" y="158" fill="#0F2560" font-family="IBM Plex Mono" font-size="12">count 8 · wait ~14m</text>
+</svg>
+</div>
+<div style="padding: 22px 22px 24px; display: flex; flex-direction: column; gap: 12px; flex: 1;">
+<p class="mono" style="margin: 0; font-size: 12px; color: #4A5E96; letter-spacing: 0.06em;">EXP. 002 · CAPSTONE</p>
+<h3 style="margin: 0; font-size: 26px; line-height: 1.1;">Queue Hop: is the line worth it?</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.5; color: #26386E;">A point-based P2PNet crowd counter aimed at the line outside the campus engineering bar, piped to a React Native app with live counts and wait estimates. Science in service of thirst.</p>
+<p class="mono" style="margin: auto 0 0; padding-top: 12px; font-size: 14px; font-weight: 600;">result: [ACCURACY / USERS]</p>
+</div>
+</article>
+
+<!-- 003 -->
+<article class="card" style="background: #F4F6FC; color: #0F2560; border: 3px solid #F2F5FF; transition: transform .15s, box-shadow .15s; display: flex; flex-direction: column;">
+<div style="height: 180px; border-bottom: 3px solid #0F2560; background: #FFD23F; overflow: hidden;">
+<svg viewBox="0 0 340 180" width="100%" height="180" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+<g fill="none" stroke="#0F2560" stroke-width="5" stroke-linecap="round">
+<path d="M150 160 V96"/><path d="M150 96 L136 40"/><path d="M150 96 L156 30"/><path d="M150 96 L172 36"/><path d="M150 96 L186 52"/><path d="M150 112 L114 86"/>
+</g>
+<g fill="#F4F6FC" stroke="#0F2560" stroke-width="2"><circle cx="150" cy="96" r="6"/><circle cx="136" cy="40" r="5"/><circle cx="156" cy="30" r="5"/><circle cx="172" cy="36" r="5"/><circle cx="186" cy="52" r="5"/><circle cx="114" cy="86" r="5"/></g>
+<rect x="210" y="56" width="96" height="64" fill="#0F2560"/>
+<text x="258" y="98" fill="#F4F6FC" font-family="Bricolage Grotesque" font-weight="800" font-size="40" text-anchor="middle">B</text>
+</svg>
+</div>
+<div style="padding: 22px 22px 24px; display: flex; flex-direction: column; gap: 12px; flex: 1;">
+<p class="mono" style="margin: 0; font-size: 12px; color: #4A5E96; letter-spacing: 0.06em;">EXP. 003 · QMIND · BEST PAPER, CUCAI</p>
+<h3 style="margin: 0; font-size: 26px; line-height: 1.1;">HelpingHand: ASL, letter by letter</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.5; color: #26386E;">Real-time American Sign Language letter recognition from a webcam feed, built with Keras and OpenCV. The accompanying paper took Best Paper at the Canadian Undergraduate Conference on AI.</p>
+<p class="mono" style="margin: auto 0 0; padding-top: 12px; font-size: 14px; font-weight: 600;">result: 93% accuracy</p>
+</div>
+</article>
+
+<!-- 004 -->
+<article class="card" style="background: #F4F6FC; color: #0F2560; border: 3px solid #F2F5FF; transition: transform .15s, box-shadow .15s; display: flex; flex-direction: column;">
+<div style="height: 180px; border-bottom: 3px solid #0F2560; background: #0F2560; overflow: hidden;">
+<svg viewBox="0 0 340 180" width="100%" height="180" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+<g fill="#F2F5FF" opacity="0.9"><circle cx="40" cy="30" r="1.2"/><circle cx="300" cy="40" r="1.2"/><circle cx="270" cy="150" r="1.2"/><circle cx="60" cy="150" r="1.2"/><circle cx="110" cy="20" r="1"/><circle cx="220" cy="24" r="1"/></g>
+<g fill="none" stroke-linecap="round">
+<path d="M170 90 C 200 60, 250 70, 260 100 C 268 130, 220 150, 190 136" stroke="#8FE3FF" stroke-width="3"/>
+<path d="M170 90 C 140 120, 90 110, 80 80 C 72 50, 120 30, 150 44" stroke="#8FE3FF" stroke-width="3"/>
+<path d="M170 90 C 190 76, 220 82, 226 100" stroke="#FFD23F" stroke-width="2.5"/>
+<path d="M170 90 C 150 104, 120 98, 114 80" stroke="#FFD23F" stroke-width="2.5"/>
+</g>
+<circle cx="170" cy="90" r="7" fill="#F2F5FF"/>
+<circle cx="170" cy="90" r="64" fill="none" stroke="#9FB2E8" stroke-width="1.5" stroke-dasharray="3 6"/>
+<text x="24" y="170" fill="#9FB2E8" font-family="IBM Plex Mono" font-size="11">halo: present · visible: no</text>
+</svg>
+</div>
+<div style="padding: 22px 22px 24px; display: flex; flex-direction: column; gap: 12px; flex: 1;">
+<p class="mono" style="margin: 0; font-size: 12px; color: #4A5E96; letter-spacing: 0.06em;">EXP. 004 · MCDONALD INSTITUTE</p>
+<h3 style="margin: 0; font-size: 26px; line-height: 1.1;">Weighing what you can't see</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.5; color: #26386E;">Dark matter research through hydrodynamic simulations of stellar and galactic formation on Queen's supercomputer — GIZMO, yt and DICE, plus teaching Python to high-schoolers on the side.</p>
+<p class="mono" style="margin: auto 0 0; padding-top: 12px; font-size: 14px; font-weight: 600;">result: galaxies, eventually</p>
+</div>
+</article>
+
+<!-- 005 -->
+<article class="card" style="background: #F4F6FC; color: #0F2560; border: 3px solid #F2F5FF; transition: transform .15s, box-shadow .15s; display: flex; flex-direction: column;">
+<div style="height: 180px; border-bottom: 3px solid #0F2560; background: #0F2560; overflow: hidden;">
+<svg viewBox="0 0 340 180" width="100%" height="180" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+<g fill="none" stroke="#F2F5FF" stroke-width="2.5"><rect x="30" y="40" width="60" height="40"/><rect x="140" y="40" width="60" height="40"/><rect x="250" y="40" width="60" height="40"/><rect x="85" y="110" width="60" height="40"/><rect x="195" y="110" width="60" height="40"/></g>
+<g fill="#FFD23F"><circle cx="80" cy="50" r="4"/><circle cx="190" cy="50" r="4"/><circle cx="300" cy="50" r="4"/><circle cx="135" cy="120" r="4"/><circle cx="245" cy="120" r="4"/></g>
+<g stroke="#8FE3FF" stroke-width="2" stroke-dasharray="3 5" fill="none"><path d="M90 60 H140M200 60 H250M115 80 V110M225 80 V110"/></g>
+<text x="30" y="30" fill="#9FB2E8" font-family="IBM Plex Mono" font-size="11">fleet: online · OTA: green</text>
+</svg>
+</div>
+<div style="padding: 22px 22px 24px; display: flex; flex-direction: column; gap: 12px; flex: 1;">
+<p class="mono" style="margin: 0; font-size: 12px; color: #4A5E96; letter-spacing: 0.06em;">EXP. 005 · BON INTELLIGENCE · ONGOING</p>
+<h3 style="margin: 0; font-size: 26px; line-height: 1.1;">Retail vision, on the edge</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.5; color: #26386E;">Leading engineering for on-device computer vision analytics — counting, tracking and anonymisation on Jetson hardware — deployed across 11+ countries, with a modern Next.js/Node platform behind it.</p>
+<p class="mono" style="margin: auto 0 0; padding-top: 12px; font-size: 14px; font-weight: 600;">result: [PUBLIC-SAFE METRIC]</p>
+</div>
+</article>
+
+<!-- 006 -->
+<article class="card" style="background: #F4F6FC; color: #0F2560; border: 3px solid #F2F5FF; transition: transform .15s, box-shadow .15s; display: flex; flex-direction: column;">
+<div style="height: 180px; border-bottom: 3px solid #0F2560; background: #0F2560; overflow: hidden;">
+<svg viewBox="0 0 340 180" width="100%" height="180" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+<g font-family="IBM Plex Mono" font-size="13" fill="#9FB2E8">
+<text x="24" y="40">&gt; mot ?</text>
+<text x="24" y="66" fill="#F2F5FF">  word · palabra · kelime</text>
+<text x="24" y="92">&gt; context: kept</text>
+<text x="24" y="118">&gt; daily learners:</text>
+<text x="190" y="118" fill="#FFD23F" font-weight="600">100,000+</text>
+<rect x="24" y="134" width="10" height="16" fill="#8FE3FF"/>
+</g>
+</svg>
+</div>
+<div style="padding: 22px 22px 24px; display: flex; flex-direction: column; gap: 12px; flex: 1;">
+<p class="mono" style="margin: 0; font-size: 12px; color: #4A5E96; letter-spacing: 0.06em;">EXP. 006 · MPL ENTERPRISES</p>
+<h3 style="margin: 0; font-size: 26px; line-height: 1.1;">An LLM that teaches words</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.5; color: #26386E;">Architected an adaptive multilingual vocabulary tool on top of an LLM — prompt-chaining and context retention — inside a web platform serving 100,000+ daily users.</p>
+<p class="mono" style="margin: auto 0 0; padding-top: 12px; font-size: 14px; font-weight: 600;">result: shipped to prod</p>
+</div>
+</article>
+
+</div>
+</section>
+
+<!-- WORLDLINE -->
+<section id="worldline" style="max-width: 1200px; margin: 0 auto; padding: 112px 24px 40px;">
+<div style="display: flex; flex-wrap: wrap; gap: 16px 40px; align-items: baseline; justify-content: space-between; margin-bottom: 16px;">
+<h2 style="margin: 0; font-size: clamp(40px, 6vw, 72px); font-weight: 800; letter-spacing: -0.03em; line-height: 1;">My worldline</h2>
+<p class="mono" style="margin: 0; font-size: 14px; color: #C9D4F5; max-width: 360px;">a career, plotted as a spacetime diagram. c = 1. time flows up.</p>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: stretch; margin-top: 40px;">
+<div aria-hidden="true" style="flex: 1 1 280px; min-width: 0; max-width: 400px; border: 2px solid #F2F5FF; background: #0F2560; padding: 16px;">
+<svg viewBox="0 0 360 520" width="100%" height="auto">
+<path d="M20 10 L340 10 L180 120 Z" fill="#FFD23F" opacity="0.2"/>
+<path d="M180 120 L20 10 M180 120 L340 10" stroke="#FFD23F" stroke-width="2"/>
+<text x="180" y="44" fill="#F2F5FF" font-family="IBM Plex Mono" font-size="13" text-anchor="middle">future light cone</text>
+<text x="180" y="62" fill="#C9D4F5" font-family="IBM Plex Mono" font-size="11" text-anchor="middle">everything reachable from here</text>
+<path d="M180 120 C 200 180, 150 230, 170 290 S 210 380, 160 430 S 170 500, 180 515" fill="none" stroke="#F2F5FF" stroke-width="3"/>
+<g fill="#F2F5FF"><circle cx="180" cy="120" r="8" fill="#FFD23F" stroke="#F2F5FF" stroke-width="2"/><circle cx="170" cy="210" r="6"/><circle cx="168" cy="290" r="6"/><circle cx="196" cy="365" r="6"/><circle cx="162" cy="432" r="6"/></g>
+<path d="M30 515 V20" stroke="#9FB2E8" stroke-width="1.5"/>
+<text x="38" y="500" fill="#9FB2E8" font-family="IBM Plex Mono" font-size="11">t</text>
+<text x="196" y="125" fill="#F2F5FF" font-family="IBM Plex Mono" font-size="12" font-weight="600">now</text>
+</svg>
+</div>
+
+<ol style="flex: 999 1 480px; min-width: 0; list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; border-left: 3px solid #F2F5FF;">
+<li style="padding: 0 0 32px 28px; position: relative;">
+<span aria-hidden="true" style="position: absolute; left: -11px; top: 4px; width: 16px; height: 16px; background: #FFD23F; border: 2px solid #0F2560;"></span>
+<p class="mono" style="margin: 0; font-size: 13px; color: #C9D4F5;">2025.08 → now · event E₅</p>
+<h3 style="margin: 4px 0 6px; font-size: 26px;">VP of Engineering, Bon Intelligence</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.5; max-width: 620px;">Edge computer vision and retail analytics, from the model on the device to the platform in the cloud — and the team that builds both.</p>
+</li>
+<li style="padding: 0 0 32px 28px; position: relative;">
+<span aria-hidden="true" style="position: absolute; left: -10px; top: 5px; width: 14px; height: 14px; border-radius: 50%; background: #F2F5FF;"></span>
+<p class="mono" style="margin: 0; font-size: 13px; color: #C9D4F5;">2024.06 → 2025.08 · event E₄</p>
+<h3 style="margin: 4px 0 6px; font-size: 26px;">Software Engineer II, MPL Enterprises</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.5; max-width: 620px;">Full-stack tools and games for 100,000+ daily users; an LLM-powered language tool; CI/CD for a legacy monorepo.</p>
+</li>
+<li style="padding: 0 0 32px 28px; position: relative;">
+<span aria-hidden="true" style="position: absolute; left: -10px; top: 5px; width: 14px; height: 14px; border-radius: 50%; background: #F2F5FF;"></span>
+<p class="mono" style="margin: 0; font-size: 13px; color: #C9D4F5;">2023.10 → 2024.07 · event E₃</p>
+<h3 style="margin: 4px 0 6px; font-size: 26px;">Software Engineer, GCT Consulting</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.5; max-width: 620px;">Large-scale Azure Databricks ETL pipelines for a billion-dollar mining enterprise.</p>
+</li>
+<li style="padding: 0 0 32px 28px; position: relative;">
+<span aria-hidden="true" style="position: absolute; left: -10px; top: 5px; width: 14px; height: 14px; border-radius: 50%; background: #F2F5FF;"></span>
+<p class="mono" style="margin: 0; font-size: 13px; color: #C9D4F5;">2022.01 → 2023.05 · event E₂</p>
+<h3 style="margin: 4px 0 6px; font-size: 26px;">Full Stack Engineer (co-op), Alacrity Canada</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.5; max-width: 620px;">Predictive models in PyTorch and scikit-learn for a real-estate SaaS startup, plus the scraper and AWS RDS stack that fed them.</p>
+</li>
+<li style="padding: 0 0 0 28px; position: relative;">
+<span aria-hidden="true" style="position: absolute; left: -10px; top: 5px; width: 14px; height: 14px; border-radius: 50%; background: #F2F5FF;"></span>
+<p class="mono" style="margin: 0; font-size: 13px; color: #C9D4F5;">2021.05 → 2021.09 · event E₁ · origin</p>
+<h3 style="margin: 4px 0 6px; font-size: 26px;">Research Fellow, McDonald Institute</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.5; max-width: 620px;">Simulating galaxies to study dark matter. Where the physics degree met the GPU.</p>
+</li>
+</ol>
+</div>
+</section>
+
+<!-- LAB BENCH -->
+<section id="bench" style="max-width: 1200px; margin: 0 auto; padding: 112px 24px 40px;">
+<div style="display: flex; flex-wrap: wrap; gap: 40px;">
+<div style="flex: 999 1 480px; min-width: 0;">
+<h2 style="margin: 0 0 24px; font-size: clamp(40px, 6vw, 72px); font-weight: 800; letter-spacing: -0.03em; line-height: 1;">On the lab bench</h2>
+<p style="margin: 0 0 18px; font-size: 20px; line-height: 1.55; max-width: 640px;">I studied Engineering Physics at Queen's with a Computer Engineering specialisation, which mostly taught me that every system is a model, every model has assumptions, and the assumptions are where the bugs live.</p>
+<p style="margin: 0; font-size: 20px; line-height: 1.55; max-width: 640px;">These days that means squeezing neural networks onto small hardware, measuring them honestly, and building the platform around them. [ONE LINE ABOUT WHAT YOU'RE CURIOUS ABOUT NEXT]</p>
+</div>
+<div style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 16px;">
+<div style="border: 2px solid #F2F5FF; padding: 20px;">
+<p class="mono" style="margin: 0 0 12px; font-size: 12px; letter-spacing: 0.08em; color: #C9D4F5;">INSTRUMENTS · ML</p>
+<p class="mono" style="margin: 0; font-size: 15px; line-height: 1.8;">PyTorch · OpenCV · scikit-learn · TensorFlow · Keras · NVIDIA Jetson · PointPillars · P2PNet</p>
+</div>
+<div style="border: 2px solid #F2F5FF; padding: 20px;">
+<p class="mono" style="margin: 0 0 12px; font-size: 12px; letter-spacing: 0.08em; color: #C9D4F5;">INSTRUMENTS · PLATFORM</p>
+<p class="mono" style="margin: 0; font-size: 15px; line-height: 1.8;">Python · TypeScript · Next.js · Node · Docker · GCP · Azure Databricks · AWS · SQL</p>
+</div>
+<div style="border: 2px solid #FFD23F; background: #FFD23F; color: #0F2560; padding: 20px;">
+<p class="mono" style="margin: 0 0 12px; font-size: 12px; letter-spacing: 0.08em; font-weight: 600;">INSTRUMENTS · PHYSICS</p>
+<p class="mono" style="margin: 0; font-size: 15px; line-height: 1.8;">GIZMO · yt · DICE · a supercomputer · a whiteboard · stubbornness</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- CONTACT -->
+<footer id="signal" style="margin-top: 112px; background: #0F2560; color: #F2F5FF; border-top: 3px solid #F2F5FF;">
+<div style="max-width: 1200px; margin: 0 auto; padding: 96px 24px 40px;">
+<p class="mono" style="margin: 0 0 20px; font-size: 13px; letter-spacing: 0.08em; color: #9FB2E8;">TRANSMITTER · OPEN CHANNEL</p>
+<h2 style="margin: 0; font-size: clamp(48px, 9vw, 120px); font-weight: 800; letter-spacing: -0.04em; line-height: 0.92;">Send a<br><span style="color: #FFD23F;">signal.</span></h2>
+<div style="margin-top: 48px; display: flex; flex-wrap: wrap; gap: 12px;">
+<a href="mailto:griffinclark10@gmail.com" class="mono" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; background: #FFD23F; color: #0F2560; text-decoration: none; font-size: 15px; font-weight: 600;">griffinclark10@gmail.com</a>
+<a href="https://github.com/griffinclark10" class="mono" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; border: 2px solid #F2F5FF; color: #F2F5FF; text-decoration: none; font-size: 15px;">github</a>
+<a href="https://www.linkedin.com/in/griffin-clark-a02513146/" class="mono" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; border: 2px solid #F2F5FF; color: #F2F5FF; text-decoration: none; font-size: 15px;">linkedin</a>
+<a href="#top" class="mono" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; border: 2px solid #F2F5FF; color: #F2F5FF; text-decoration: none; font-size: 15px;">résumé.pdf</a>
+</div>
+<div class="mono" style="margin-top: 96px; padding-top: 20px; border-top: 1px dashed #4A64B0; display: flex; flex-wrap: wrap; gap: 12px 32px; justify-content: space-between; font-size: 13px; color: #9FB2E8;">
+<span>© 2026 Griffin Clark · Vancouver, BC · drawn to scale, mostly</span>
+<span>this page ran 0 inferences on you. probably.</span>
+</div>
+</div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#FFD23F","options":["#FFD23F","#FF8A3D","#8FE3FF","#C6F432"]},"showGrid":{"editor":"boolean","default":true},"$preview":{"width":1440,"height":5100}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var grid = this.props.showGrid ?? true;
+    return {
+      accent: this.props.accent ?? '#FFD23F',
+      gridSize: grid ? '32px' : '0px'
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import Button from '../components/Button.astro';
+import { notesAreVisible } from '../lib/site';
+
+const showNotes = await notesAreVisible();
+---
+
+<BaseLayout
+  title="Nothing here · Griffin Clark"
+  description="No detections above threshold at this address."
+  surface="blueprint"
+  noindex
+>
+  <SiteHeader minimal />
+  <main id="main" class="container not-found">
+    <div class="viewfinder" aria-hidden="true">
+      <span class="corner tl"></span>
+      <span class="corner tr"></span>
+      <span class="corner bl"></span>
+      <span class="corner br"></span>
+      <div class="empty-box">
+        <span class="chip mono">page · 0.00</span>
+      </div>
+      <span class="rec mono">REC ● frame 404 · 0 objects</span>
+    </div>
+
+    <div class="copy">
+      <p class="eyebrow">error 404 · no detections above threshold</p>
+      <h1>
+        Nothing
+        <br />
+        here<span>.</span>
+      </h1>
+      <p class="body">
+        The model looked very hard and found no page at this address. Either it moved, or it was
+        never here, or it's in a superposition of both until you check the home page.
+      </p>
+      <div class="actions">
+        <Button href="/" variant="accent">
+          collapse to home →
+        </Button>
+        {showNotes && <Button href="/notes">field notes</Button>}
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .not-found {
+    padding-top: 48px;
+    padding-bottom: 72px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 56px;
+    align-items: center;
+  }
+
+  .viewfinder {
+    flex: 1 1 360px;
+    min-width: 0;
+    max-width: 520px;
+    aspect-ratio: 4 / 3;
+    position: relative;
+    border: 2px solid var(--bp-muted-2);
+  }
+
+  .corner {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    border: 0 solid var(--bp-ink);
+  }
+
+  .tl {
+    top: -2px;
+    left: -2px;
+    border-top-width: 4px;
+    border-left-width: 4px;
+  }
+
+  .tr {
+    top: -2px;
+    right: -2px;
+    border-top-width: 4px;
+    border-right-width: 4px;
+  }
+
+  .bl {
+    bottom: -2px;
+    left: -2px;
+    border-bottom-width: 4px;
+    border-left-width: 4px;
+  }
+
+  .br {
+    bottom: -2px;
+    right: -2px;
+    border-bottom-width: 4px;
+    border-right-width: 4px;
+  }
+
+  .empty-box {
+    position: absolute;
+    left: 28%;
+    top: 30%;
+    width: 40%;
+    height: 40%;
+    border: 3px dashed var(--accent);
+  }
+
+  .chip {
+    position: absolute;
+    top: -30px;
+    left: -3px;
+    padding: 3px 8px;
+    background: var(--accent);
+    color: var(--bp-deep);
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .rec {
+    position: absolute;
+    left: 14px;
+    bottom: 12px;
+    font-size: 12px;
+    color: var(--bp-muted);
+  }
+
+  .copy {
+    flex: 999 1 420px;
+    min-width: 0;
+  }
+
+  .eyebrow {
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(56px, 9vw, 112px);
+    font-weight: 800;
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+  }
+
+  h1 span {
+    color: var(--accent);
+  }
+
+  .body {
+    margin: 28px 0 0;
+    max-width: 480px;
+    font-size: 20px;
+    line-height: 1.5;
+    color: var(--bp-muted);
+  }
+
+  .actions {
+    margin-top: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+</style>

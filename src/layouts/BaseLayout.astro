@@ -1,0 +1,43 @@
+---
+import '../styles/global.css';
+import bricolageLatin from '@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-opsz-normal.woff2?url';
+import { SITE } from '../lib/site';
+
+interface Props {
+  /** Full <title>. Pages other than home pass `${title} · Griffin Clark`. */
+  title: string;
+  description?: string;
+  surface: 'blueprint' | 'paper';
+  noindex?: boolean;
+}
+
+const { title, description = SITE.description, surface, noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const themeColor = surface === 'blueprint' ? '#1C3D96' : '#F4F6FC';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+    <meta name="theme-color" content={themeColor} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="preload" href={bricolageLatin} as="font" type="font/woff2" crossorigin />
+    <slot name="head" />
+  </head>
+  <body class={`surface-${surface}`}>
+    <a class="skip-link" href="#main">
+      skip to content
+    </a>
+    <div class="page">
+      <slot />
+    </div>
+  </body>
+</html>

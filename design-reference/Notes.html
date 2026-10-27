@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Field notes — Griffin Clark</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F6FC}
+a{color:#1C3D96}a:hover{color:#0F2560}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+.entry:hover{background:#FFFFFF}
+</style>
+</helmet>
+
+<div style="font-family: 'Bricolage Grotesque', system-ui, sans-serif; color: #1C3D96; background-color: #F4F6FC; background-image: linear-gradient(rgba(28,61,150,0.09) 1px, transparent 1px), linear-gradient(90deg, rgba(28,61,150,0.09) 1px, transparent 1px); background-size: 32px 32px; min-height: 100%;">
+
+<!-- TOP BAR -->
+<header style="max-width: 1200px; margin: 0 auto; padding: 24px 24px 0; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between;">
+<a href="Main.dc.html" class="mono" style="font-weight: 600; font-size: 18px; color: #1C3D96; text-decoration: none; padding: 10px 0;">gc<span style="color: #4A5E96;">/</span>edge</a>
+<nav aria-label="Primary" class="mono" style="display: flex; flex-wrap: wrap; gap: 4px; font-size: 14px;">
+<a href="Main.dc.html" style="padding: 12px 14px; color: #1C3D96; text-decoration: none;">experiments</a>
+<a href="Main.dc.html" style="padding: 12px 14px; color: #1C3D96; text-decoration: none;">worldline</a>
+<a href="Notes.dc.html" style="padding: 12px 14px; color: #1C3D96; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px;">field notes</a>
+<a href="Main.dc.html" style="padding: 12px 14px; color: #F4F6FC; background: #1C3D96; text-decoration: none;">send a signal</a>
+</nav>
+</header>
+
+<!-- HEADER -->
+<section style="max-width: 1200px; margin: 0 auto; padding: 88px 24px 48px; display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-end; justify-content: space-between;">
+<div style="flex: 999 1 520px; min-width: 0;">
+<p class="mono" style="margin: 0 0 20px; font-size: 13px; letter-spacing: 0.08em; color: #4A5E96;">NOTEBOOK · VOL. 1</p>
+<h1 style="margin: 0; font-weight: 800; font-size: clamp(60px, 10vw, 136px); line-height: 0.9; letter-spacing: -0.04em;">Field<br>notes<span style="background: #FFD23F; padding: 0 0.04em;">.</span></h1>
+</div>
+<p style="flex: 1 1 300px; min-width: 0; margin: 0; max-width: 400px; font-size: 20px; line-height: 1.45;">Write-ups from the bench: what I measured, what broke, and what I'd do differently. Mostly edge ML, occasionally physics.</p>
+</section>
+
+<!-- FILTERS -->
+<div style="max-width: 1200px; margin: 0 auto; padding: 0 24px 24px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
+<span class="mono" style="font-size: 13px; color: #4A5E96; margin-right: 8px;">filter by tag:</span>
+<button type="button" aria-pressed="true" class="mono" style="min-height: 44px; padding: 0 16px; border: 2px solid #1C3D96; background: #1C3D96; color: #F4F6FC; font-size: 14px; cursor: pointer;">all</button>
+<button type="button" aria-pressed="false" class="mono" style="min-height: 44px; padding: 0 16px; border: 2px solid #1C3D96; background: transparent; color: #1C3D96; font-size: 14px; cursor: pointer;">edge ml</button>
+<button type="button" aria-pressed="false" class="mono" style="min-height: 44px; padding: 0 16px; border: 2px solid #1C3D96; background: transparent; color: #1C3D96; font-size: 14px; cursor: pointer;">tooling</button>
+<button type="button" aria-pressed="false" class="mono" style="min-height: 44px; padding: 0 16px; border: 2px solid #1C3D96; background: transparent; color: #1C3D96; font-size: 14px; cursor: pointer;">physics</button>
+<a href="Notes.dc.html" class="mono" style="margin-left: auto; padding: 12px 0; font-size: 14px; color: #1C3D96;">rss ↗</a>
+</div>
+
+<!-- ENTRIES -->
+<section aria-label="Notes" style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+<ol style="list-style: none; margin: 0; padding: 0; border-top: 3px solid #1C3D96;">
+
+<li class="entry" style="border-bottom: 2px solid #1C3D96;">
+<a href="Experiment.dc.html" style="display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: baseline; padding: 32px 8px; color: #1C3D96; text-decoration: none;">
+<span class="mono" style="flex: 0 0 88px; font-size: 14px; color: #4A5E96;">N° 004</span>
+<span style="flex: 999 1 420px; min-width: 0;">
+<span style="display: block; font-size: clamp(24px, 3vw, 36px); font-weight: 600; line-height: 1.15; letter-spacing: -0.01em;">What a foundation model's mistakes do to a 0.4M-parameter detector</span>
+<span style="display: block; margin-top: 10px; font-size: 17px; line-height: 1.5; color: #26386E;">The label-noise study behind Exp. 007, with every chart and every failed run.</span>
+</span>
+<span class="mono" style="flex: 1 1 200px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; font-size: 13px;">
+<span style="padding: 3px 8px; background: #FFD23F; color: #1C3D96; font-weight: 600;">PLANNED</span>
+<span style="padding: 3px 8px; border: 1px solid #1C3D96;">edge ml</span>
+</span>
+</a>
+</li>
+
+<li class="entry" style="border-bottom: 2px solid #1C3D96;">
+<a href="Notes.dc.html" style="display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: baseline; padding: 32px 8px; color: #1C3D96; text-decoration: none;">
+<span class="mono" style="flex: 0 0 88px; font-size: 14px; color: #4A5E96;">N° 003</span>
+<span style="flex: 999 1 420px; min-width: 0;">
+<span style="display: block; font-size: clamp(24px, 3vw, 36px); font-weight: 600; line-height: 1.15; letter-spacing: -0.01em;">INT8 on an ESP32: where the accuracy actually goes</span>
+<span style="display: block; margin-top: 10px; font-size: 17px; line-height: 1.5; color: #26386E;">Calibration sets, per-channel versus per-tensor, and the layers that refuse to quantise quietly.</span>
+</span>
+<span class="mono" style="flex: 1 1 200px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; font-size: 13px;">
+<span style="padding: 3px 8px; background: #FFD23F; color: #1C3D96; font-weight: 600;">PLANNED</span>
+<span style="padding: 3px 8px; border: 1px solid #1C3D96;">tooling</span>
+</span>
+</a>
+</li>
+
+<li class="entry" style="border-bottom: 2px solid #1C3D96;">
+<a href="Notes.dc.html" style="display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: baseline; padding: 32px 8px; color: #1C3D96; text-decoration: none;">
+<span class="mono" style="flex: 0 0 88px; font-size: 14px; color: #4A5E96;">N° 002</span>
+<span style="flex: 999 1 420px; min-width: 0;">
+<span style="display: block; font-size: clamp(24px, 3vw, 36px); font-weight: 600; line-height: 1.15; letter-spacing: -0.01em;">Cars that borrow the roadside's eyes</span>
+<span style="display: block; margin-top: 10px; font-size: 17px; line-height: 1.5; color: #26386E;">My thesis on cooperative perception, rewritten for people who didn't have to read it.</span>
+</span>
+<span class="mono" style="flex: 1 1 200px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; font-size: 13px;">
+<span style="padding: 3px 8px; background: #1C3D96; color: #F4F6FC;">[DATE] · [N] MIN</span>
+<span style="padding: 3px 8px; border: 1px solid #1C3D96;">edge ml</span>
+</span>
+</a>
+</li>
+
+<li class="entry" style="border-bottom: 2px solid #1C3D96;">
+<a href="Notes.dc.html" style="display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: baseline; padding: 32px 8px; color: #1C3D96; text-decoration: none;">
+<span class="mono" style="flex: 0 0 88px; font-size: 14px; color: #4A5E96;">N° 001</span>
+<span style="flex: 999 1 420px; min-width: 0;">
+<span style="display: block; font-size: clamp(24px, 3vw, 36px); font-weight: 600; line-height: 1.15; letter-spacing: -0.01em;">Simulating galaxies to look for something invisible</span>
+<span style="display: block; margin-top: 10px; font-size: 17px; line-height: 1.5; color: #26386E;">A summer of dark-matter simulations, and what hydrodynamics codes taught me about debugging.</span>
+</span>
+<span class="mono" style="flex: 1 1 200px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; font-size: 13px;">
+<span style="padding: 3px 8px; background: #1C3D96; color: #F4F6FC;">[DATE] · [N] MIN</span>
+<span style="padding: 3px 8px; border: 1px solid #1C3D96;">physics</span>
+</span>
+</a>
+</li>
+
+</ol>
+<p class="mono" style="margin: 32px 0 0; font-size: 13px; color: #4A5E96;">end of notebook · more pages being written</p>
+</section>
+
+<!-- FOOTER -->
+<footer style="margin-top: 120px; background: #1C3D96; color: #C9D4F5;">
+<div class="mono" style="max-width: 1200px; margin: 0 auto; padding: 32px 24px; display: flex; flex-wrap: wrap; gap: 12px 32px; justify-content: space-between; font-size: 13px;">
+<span>© 2026 Griffin Clark · Vancouver, BC</span>
+<a href="mailto:griffinclark10@gmail.com" style="color: #FFD23F;">griffinclark10@gmail.com</a>
+</div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#FFD23F","options":["#FFD23F","#FF8A3D","#8FE3FF","#C6F432"]},"$preview":{"width":1440,"height":2600}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#FFD23F' };
+  }
+}
+</script>
+</body>
+</html>

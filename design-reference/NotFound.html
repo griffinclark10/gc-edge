@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>404 — Nothing detected</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#1C3D96}
+a{color:#F2F5FF}a:hover{color:#FFFFFF}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+</style>
+</helmet>
+
+<div style="font-family: 'Bricolage Grotesque', system-ui, sans-serif; color: #F2F5FF; background-color: #1C3D96; background-image: linear-gradient(rgba(242,245,255,0.11) 1px, transparent 1px), linear-gradient(90deg, rgba(242,245,255,0.11) 1px, transparent 1px); background-size: 32px 32px; min-height: 900px; display: flex; flex-direction: column;">
+
+<header style="max-width: 1200px; width: 100%; box-sizing: border-box; margin: 0 auto; padding: 24px 24px 0;">
+<a href="Main.dc.html" class="mono" style="display: inline-block; font-weight: 600; font-size: 18px; color: #F2F5FF; text-decoration: none; padding: 10px 0;">gc<span style="color: #FFD23F;">/</span>edge</a>
+</header>
+
+<main style="flex: 1; max-width: 1200px; width: 100%; box-sizing: border-box; margin: 0 auto; padding: 48px 24px 72px; display: flex; flex-wrap: wrap; gap: 56px; align-items: center;">
+
+<!-- empty viewfinder -->
+<div aria-hidden="true" style="flex: 1 1 360px; min-width: 0; max-width: 520px; aspect-ratio: 4 / 3; position: relative; border: 2px solid #8FA3DB;">
+<span style="position: absolute; top: -2px; left: -2px; width: 28px; height: 28px; border-top: 4px solid #F2F5FF; border-left: 4px solid #F2F5FF;"></span>
+<span style="position: absolute; top: -2px; right: -2px; width: 28px; height: 28px; border-top: 4px solid #F2F5FF; border-right: 4px solid #F2F5FF;"></span>
+<span style="position: absolute; bottom: -2px; left: -2px; width: 28px; height: 28px; border-bottom: 4px solid #F2F5FF; border-left: 4px solid #F2F5FF;"></span>
+<span style="position: absolute; bottom: -2px; right: -2px; width: 28px; height: 28px; border-bottom: 4px solid #F2F5FF; border-right: 4px solid #F2F5FF;"></span>
+<div style="position: absolute; left: 28%; top: 30%; width: 40%; height: 40%; border: 3px dashed #FFD23F;">
+<span class="mono" style="position: absolute; top: -30px; left: -3px; background: #FFD23F; color: #1C3D96; font-size: 13px; font-weight: 600; padding: 3px 8px; white-space: nowrap;">page · 0.00</span>
+</div>
+<span class="mono" style="position: absolute; left: 14px; bottom: 12px; font-size: 12px; color: #C9D4F5;">REC ● frame 404 · 0 objects</span>
+</div>
+
+<div style="flex: 999 1 420px; min-width: 0;">
+<p class="mono" style="margin: 0 0 16px; font-size: 13px; letter-spacing: 0.08em; color: #C9D4F5;">ERROR 404 · NO DETECTIONS ABOVE THRESHOLD</p>
+<h1 style="margin: 0; font-weight: 800; font-size: clamp(56px, 9vw, 112px); line-height: 0.92; letter-spacing: -0.04em;">Nothing<br>here<span style="color: #FFD23F;">.</span></h1>
+<p style="margin: 28px 0 0; max-width: 480px; font-size: 20px; line-height: 1.5; color: #DCE3FA;">The model looked very hard and found no page at this address. Either it moved, or it was never here, or it's in a superposition of both until you check the home page.</p>
+<div style="margin-top: 32px; display: flex; flex-wrap: wrap; gap: 12px;">
+<a href="Main.dc.html" class="mono" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; background: #FFD23F; color: #1C3D96; text-decoration: none; font-size: 15px; font-weight: 600;">collapse to home →</a>
+<a href="Notes.dc.html" class="mono" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; border: 2px solid #F2F5FF; color: #F2F5FF; text-decoration: none; font-size: 15px;">field notes</a>
+</div>
+</div>
+</main>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#FFD23F","options":["#FFD23F","#FF8A3D","#8FE3FF","#C6F432"]},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#FFD23F' };
+  }
+}
+</script>
+</body>
+</html>

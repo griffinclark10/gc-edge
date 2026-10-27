@@ -1,0 +1,57 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'a'> {
+  href: string;
+  /** primary = ink fill · accent = yellow fill (CTAs) · secondary = 2px ink outline */
+  variant?: 'primary' | 'accent' | 'secondary';
+}
+
+const { href, variant = 'secondary', class: className, ...rest } = Astro.props;
+---
+
+<a href={href} class:list={['button', 'mono', variant, className]} {...rest}>
+  <slot />
+</a>
+
+<style>
+  .button {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 22px;
+    font-size: 15px;
+    text-decoration: none;
+    border: 2px solid transparent;
+  }
+
+  .primary {
+    background: var(--ink-fill);
+    border-color: var(--ink-fill);
+    color: var(--on-ink-fill);
+    font-weight: 600;
+  }
+
+  .accent {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bp-deep);
+    font-weight: 600;
+  }
+
+  .secondary {
+    border-color: var(--line);
+    color: var(--fg);
+  }
+
+  .secondary:hover {
+    background: var(--ink-fill);
+    color: var(--on-ink-fill);
+  }
+
+  .primary:hover,
+  .accent:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+</style>
