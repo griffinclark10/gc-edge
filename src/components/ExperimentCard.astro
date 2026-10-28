@@ -12,6 +12,8 @@ const { kicker, title, summary, result, notes, illustration } = entry.data;
 const href = experimentHref(entry);
 const art = getIllustration(illustration);
 const Art = art?.component;
+// hover-detection chip (§4.5): "exp · 0.9x", x from the experiment id
+const chip = `exp · 0.9${Number(entry.data.id) % 10}`;
 ---
 
 <article class:list={['card', { linked: href }]}>
@@ -27,7 +29,9 @@ const Art = art?.component;
     <h3>
       {href ? (
         <a href={href}>
-          <Fill text={title} />
+          <span class="target" data-chip={chip}>
+            <Fill text={title} />
+          </span>
         </a>
       ) : (
         <Fill text={title} />
@@ -88,6 +92,51 @@ const Art = art?.component;
 
   h3 a:focus-visible {
     outline: none;
+  }
+
+  /* §4.5 (optional): on pointer devices, hovering a linked card "detects" its title.
+     The span is inside the link, so the link's stretched ::after still covers the card. */
+  .target {
+    position: relative;
+    display: inline-block;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .target::before,
+    .target::after {
+      position: absolute;
+      opacity: 0;
+      transform: scale(1.04);
+      transition:
+        opacity 0.15s,
+        transform 0.15s;
+      pointer-events: none;
+    }
+
+    .target::before {
+      content: '';
+      inset: -6px -10px;
+      border: 2px solid var(--accent);
+    }
+
+    .target::after {
+      content: attr(data-chip);
+      /* top-right, so it never covers the kicker line above the title */
+      right: -10px;
+      bottom: calc(100% + 6px);
+      padding: 1px 6px;
+      background: var(--accent);
+      color: var(--bp-deep);
+      font: 600 11px/1.4 var(--font-mono);
+      white-space: nowrap;
+      transform-origin: right bottom;
+    }
+
+    .card.linked:hover .target::before,
+    .card.linked:hover .target::after {
+      opacity: 1;
+      transform: none;
+    }
   }
 
   .art {

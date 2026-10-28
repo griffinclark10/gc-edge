@@ -6,3 +6,6 @@ public
 design-reference
 SPEC.md
 .lighthouseci
+dist-drafts
+test-results
+playwright-report

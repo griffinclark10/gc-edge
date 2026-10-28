@@ -1,19 +1,39 @@
 ---
 interface Props {
-  /** Chip text, e.g. "person · id 07 · 0.98". */
+  /** Chip text, e.g. "person · id 07 · 0.98". A trailing number is the confidence. */
   label: string;
+  /** §4.5 hero lock-on: box settles in, confidence counts up from 0.00. Once, on load. */
+  lockOn?: boolean;
 }
 
-const { label } = Astro.props;
+const { label, lockOn = false } = Astro.props;
+const [, prefix = label, confidence] = label.match(/^(.*?)(\d+\.\d+)$/) ?? [];
 ---
 
-<span class="detection">
+<span class:list={['detection', { 'lock-on': lockOn }]} data-lock-on={lockOn || undefined}>
   <slot />
   <span class="box" aria-hidden="true"></span>
   <span class="chip mono" aria-hidden="true">
-    {label}
+    {prefix}
+    {confidence && <span data-conf={confidence}>{confidence}</span>}
   </span>
 </span>
+
+{lockOn && <script>
+  // Count the chip's confidence 0.00 → target over 600ms (ease-out). The HTML
+  // already shows the final value, so no-JS and reduced-motion visitors see it as-is.
+  const conf = document.querySelector<HTMLElement>('[data-lock-on] [data-conf]');
+  if (conf && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const target = Number(conf.dataset.conf);
+    const start = performance.now();
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / 600);
+      conf.textContent = (target * (1 - (1 - t) ** 3)).toFixed(2);
+      if (t < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+</script>}
 
 <style>
   .detection {
@@ -43,5 +63,30 @@ const { label } = Astro.props;
     letter-spacing: 0;
     line-height: 1.4;
     white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* §4.5: scale 1.08 → 1 and fade in over 500ms. Transform/opacity only: no layout shift. */
+  .lock-on .box,
+  .lock-on .chip {
+    animation: lock-on 500ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .lock-on .chip {
+    transform-origin: left bottom;
+  }
+
+  @keyframes lock-on {
+    from {
+      opacity: 0;
+      transform: scale(1.08);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lock-on .box,
+    .lock-on .chip {
+      animation: none;
+    }
   }
 </style>

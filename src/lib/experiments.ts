@@ -1,4 +1,5 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { SHOW_DRAFTS } from './site';
 
 export type Experiment = CollectionEntry<'experiments'>;
 
@@ -10,11 +11,12 @@ export async function getListedExperiments() {
 
 /**
  * Whether this entry's case study is built in this build. `pageDraft` pages
- * (Exp. 007) exist in `astro dev` only, so nothing links to a page that isn't public.
+ * (Exp. 007) exist only in dev / SHOW_DRAFTS builds, so nothing links to a page
+ * that isn't public.
  */
 export function hasLivePage({ data }: Experiment) {
   if (!data.hasPage) return false;
-  return import.meta.env.DEV || !data.pageDraft;
+  return SHOW_DRAFTS || !data.pageDraft;
 }
 
 export function experimentHref(entry: Experiment) {

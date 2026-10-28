@@ -1,17 +1,20 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { NOTE_TAGS } from './lib/tags';
 
-// Field notes (§6.7). The collection exists from M1 so the nav and 404 can hide
-// "field notes" until at least one note is published. Templates arrive in M4.
+// Field notes (§6.7). Nav, routes and RSS stay hidden until one is published.
+// The URL is the filename: src/content/notes/<slug>.mdx → /notes/<slug>/.
 const notes = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/notes' }),
   schema: z.object({
     number: z.string(), // "001"
     title: z.string(),
     dek: z.string(),
-    date: z.coerce.date(),
-    tags: z.array(z.enum(['edge ml', 'tooling', 'physics'])),
-    readMinutes: z.number().int().positive(),
+    /** required once published (enforced in lib/site.ts); drafts show "[DATE]" */
+    date: z.coerce.date().optional(),
+    tags: z.array(z.enum(NOTE_TAGS)).min(1),
+    /** override; otherwise computed from the word count */
+    readMinutes: z.number().int().positive().optional(),
     draft: z.boolean().default(true),
   }),
 });

@@ -1,0 +1,76 @@
+---
+number: '001'
+title: "Cars that borrow the roadside's eyes"
+dek: "My thesis on cooperative perception, rewritten for people who didn't have to read it."
+tags: ['edge ml']
+# DRAFT, written by Claude from the thesis PDF (public/papers/cooperative-perception-thesis.pdf).
+# Griffin: rewrite in your own voice, fill the last section, add a date, then set draft: false.
+# Publishing it switches on /notes/, the nav item and /rss.xml.
+draft: true
+---
+
+import Figure from '../../components/notes/Figure.astro';
+import roadside from '../../assets/experiments/001/thesis1.png';
+import fused from '../../assets/experiments/001/thesis2.png';
+
+A self-driving car can only see what its own sensors can see. A bus pulls into the next lane and everything behind it disappears. A sensor on a pole at the intersection has no such problem: it sits high, it doesn't move, and it sees the whole junction at once. Cooperative perception asks the obvious question: what if the car could borrow that view?
+
+My undergraduate thesis looked at one part of that question. Once a car and a roadside unit agree to share, _what_ should they send each other?
+
+## Three things you can send
+
+Both sides start with LiDAR point clouds. There are three places to hand data over:
+
+- **Early fusion** sends the raw point clouds. Nothing is lost, but it's heavy: the DAIR-V2X authors measured about 1.4 MB per frame.
+- **Late fusion** sends only the finished detections, the boxes. That's about 336 bytes a frame, but each side has already thrown away everything its own model wasn't sure about.
+- **Intermediate fusion** sends something in between: the feature maps a detector builds on its way to producing boxes. Richer than boxes, much smaller than raw points.
+
+My bet was that intermediate fusion would beat both on accuracy, while costing far less bandwidth than early fusion.
+
+## The data
+
+DAIR-V2X was recorded at real intersections, with a car and a roadside unit capturing the same scenes from both sides: about 70,000 LiDAR point clouds and camera frames.[^real] Its labels cover cars, trucks, vans, buses, pedestrians, cyclists, tricyclists, motorcyclists and traffic cones.
+
+<Figure
+  n={1}
+  src={roadside}
+  alt="A LiDAR point cloud of a busy intersection seen from a roadside unit, with coloured 3D boxes around cars, pedestrians and cyclists."
+  caption="one DAIR-V2X frame from the roadside unit, with its labelled boxes"
+/>
+
+## Plan A, and what happened to it
+
+The plan was to add intermediate fusion to the DAIR-V2X authors' own code, which already did early and late fusion. It didn't go well. Every error I fixed surfaced another, and contacting the authors and filing issues on their GitHub didn't unblock it. Eventually I stopped.
+
+Then, in March 2023, a new model called CoAlign came out with intermediate fusion for DAIR-V2X built in. It also fixes a problem I'd have hit anyway: the car and the roadside unit never agree perfectly on where they are relative to each other, so their feature maps don't line up. CoAlign builds a small graph of the agents and the objects they can both see, and solves for the poses that make those objects agree before it fuses anything.
+
+## What the numbers said
+
+I trained CoAlign's early, late and intermediate variants, all with a PointPillars encoder, and scored them on average precision.[^ap]
+
+| fusion       | AP@0.5    | AP@0.7    |
+| ------------ | --------- | --------- |
+| early        | 0.729     | 0.596     |
+| late         | 0.716     | 0.573     |
+| intermediate | **0.772** | **0.627** |
+
+Intermediate fusion won at both thresholds. The comparison with the DAIR-V2X authors' published baselines (0.537 early, 0.480 late) looks even better, but it isn't a fair one: their numbers came from a different split of the data, and CoAlign's version of the dataset adds extra labels for full 360° detection.
+
+The bandwidth half of the bet I couldn't settle. The code only estimated bytes sent to an order of magnitude, which is too coarse to rank the three methods. That's the part I'd re-run first.
+
+<Figure
+  n={2}
+  src={fused}
+  alt="Bird's-eye view of a fused point cloud: red predicted boxes overlap green ground-truth boxes, each prediction labelled with a score."
+  caption="final intermediate-fusion predictions (red) against labels (green), bird's-eye view"
+/>
+
+## What I took from it
+
+<span class="ph">
+  [FILL: your takeaway, e.g. what this changed about how you measure models on edge hardware]
+</span>
+
+[^real]: As of early 2023, the only public dataset that was both recorded in the real world and vehicle-to-everything.
+
+[^ap]: Average precision at an IoU threshold of 0.5: a predicted box counts as a hit when it overlaps a labelled box by at least half (intersection over union). AP@0.7 is the stricter version.

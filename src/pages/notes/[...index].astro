@@ -1,0 +1,304 @@
+---
+// /notes/ — only built once a note is published (§3). A rest route with an empty
+// param is how a static page opts out of the build.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import PaperFooter from '../../components/PaperFooter.astro';
+import { NOTE_TAGS } from '../../lib/tags';
+import { formatDate, getPublishedNotes, notesAreVisible, readMinutes } from '../../lib/site';
+
+export async function getStaticPaths() {
+  return (await notesAreVisible()) ? [{ params: { index: undefined } }] : [];
+}
+
+const notes = await getPublishedNotes();
+const tags = NOTE_TAGS.filter((t) => notes.some((n) => n.data.tags.includes(t)));
+---
+
+<BaseLayout
+  title="Field notes · Griffin Clark"
+  description="Write-ups from the bench: what I measured, what broke, and what I'd do differently. Mostly edge ML, occasionally physics."
+  surface="paper"
+>
+  <link
+    slot="head"
+    rel="alternate"
+    type="application/rss+xml"
+    title="Field notes"
+    href="/rss.xml"
+  />
+  <SiteHeader current="notes" />
+  <main id="main">
+    <section class="container intro">
+      <div class="title-block">
+        <p class="eyebrow">notebook · vol. 1</p>
+        <h1>
+          Field
+          <br />
+          notes<span class="stop">.</span>
+        </h1>
+      </div>
+      <p class="lede">
+        Write-ups from the bench: what I measured, what broke, and what I'd do differently. Mostly
+        edge ML, occasionally physics.
+      </p>
+    </section>
+
+    <div class="container toolbar">
+      {/* Shown by the script below; without JS every note is listed and there's nothing to filter. */}
+      <div class="filters" data-filters hidden>
+        <span class="mono label" id="filter-label">
+          filter by tag:
+        </span>
+        <div role="group" aria-labelledby="filter-label" class="chips">
+          <button type="button" class="chip mono" data-tag="all" aria-pressed="true">
+            all
+          </button>
+          {tags.map((tag) => (
+            <button type="button" class="chip mono" data-tag={tag} aria-pressed="false">
+              {tag}
+            </button>
+          ))}
+        </div>
+      </div>
+      <a class="rss mono" href="/rss.xml">
+        rss ↗
+      </a>
+    </div>
+
+    <section class="container" aria-label="Notes">
+      <p class="visually-hidden" aria-live="polite" data-filter-status></p>
+      <ol class="entries">
+        {notes.map((note) => (
+          <li data-note-tags={note.data.tags.join('|')}>
+            <a href={`/notes/${note.id}/`}>
+              <span class="num mono">N° {note.data.number}</span>
+              <span class="text">
+                <span class="title">{note.data.title}</span>
+                <span class="dek">{note.data.dek}</span>
+              </span>
+              <span class="meta mono">
+                <span class="pill">
+                  {formatDate(note.data.date)} · {readMinutes(note)} MIN
+                </span>
+                {note.data.tags.map((tag) => (
+                  <span class="tag">{tag}</span>
+                ))}
+              </span>
+            </a>
+          </li>
+        ))}
+      </ol>
+      <p class="end mono">end of notebook · more pages being written</p>
+    </section>
+  </main>
+  <PaperFooter />
+</BaseLayout>
+
+<script>
+  // §4.6 tag filter: real buttons with aria-pressed, client-side only.
+  const bar = document.querySelector<HTMLElement>('[data-filters]');
+  const status = document.querySelector<HTMLElement>('[data-filter-status]');
+  const items = [...document.querySelectorAll<HTMLElement>('[data-note-tags]')];
+  if (bar) {
+    bar.hidden = false;
+    bar.addEventListener('click', (event) => {
+      const button = (event.target as HTMLElement).closest('button');
+      if (!button) return;
+      const tag = button.dataset.tag;
+      bar
+        .querySelectorAll('button')
+        .forEach((b) => b.setAttribute('aria-pressed', String(b === button)));
+      let shown = 0;
+      for (const li of items) {
+        li.hidden = tag !== 'all' && !li.dataset.noteTags!.split('|').includes(tag!);
+        if (!li.hidden) shown += 1;
+      }
+      if (status) status.textContent = `${shown} ${shown === 1 ? 'note' : 'notes'} shown`;
+    });
+  }
+</script>
+
+<style>
+  .intro {
+    padding-top: 88px;
+    padding-bottom: 48px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .title-block {
+    flex: 999 1 520px;
+    min-width: 0;
+  }
+
+  .eyebrow {
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(60px, 10vw, 136px);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: var(--pp-ink);
+  }
+
+  /* yellow as a fill behind the full stop, never as text on paper (§4.1) */
+  .stop {
+    padding: 0 0.04em;
+    background: var(--accent);
+  }
+
+  .lede {
+    flex: 1 1 300px;
+    min-width: 0;
+    max-width: 400px;
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.45;
+    color: var(--pp-ink);
+  }
+
+  .toolbar {
+    padding-bottom: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .filters,
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .filters[hidden] {
+    display: none;
+  }
+
+  .label {
+    margin-right: 8px;
+    font-size: 13px;
+    color: var(--pp-muted);
+  }
+
+  .chip {
+    min-height: 44px;
+    padding: 0 16px;
+    border: 2px solid var(--pp-ink);
+    background: transparent;
+    color: var(--pp-ink);
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .chip[aria-pressed='true'] {
+    background: var(--pp-ink);
+    color: var(--pp-ground);
+  }
+
+  .rss {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 14px;
+    color: var(--pp-ink);
+  }
+
+  .entries {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 3px solid var(--pp-ink);
+  }
+
+  .entries li {
+    border-bottom: 2px solid var(--pp-ink);
+  }
+
+  .entries a {
+    padding: 32px 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 32px;
+    align-items: baseline;
+    color: var(--pp-ink);
+    text-decoration: none;
+  }
+
+  .entries a:hover {
+    background: var(--pp-card);
+  }
+
+  .num {
+    flex: 0 0 88px;
+    font-size: 14px;
+    color: var(--pp-muted);
+  }
+
+  .text {
+    flex: 999 1 420px;
+    min-width: 0;
+  }
+
+  .title {
+    display: block;
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+
+  .dek {
+    display: block;
+    margin-top: 10px;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--pp-body);
+  }
+
+  .meta {
+    flex: 1 1 200px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+    font-size: 13px;
+  }
+
+  .pill {
+    padding: 3px 8px;
+    background: var(--pp-ink);
+    color: var(--pp-ground);
+  }
+
+  .tag {
+    padding: 3px 8px;
+    border: 1px solid var(--pp-ink);
+  }
+
+  .end {
+    margin: 32px 0 0;
+    font-size: 13px;
+    color: var(--pp-muted);
+  }
+
+  @media (max-width: 720px) {
+    .intro {
+      padding-top: 64px;
+    }
+
+    .meta {
+      justify-content: flex-start;
+    }
+  }
+</style>

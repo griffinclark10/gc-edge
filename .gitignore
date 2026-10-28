@@ -11,3 +11,7 @@ SPEC.md
 
 # local preview config
 .claude/
+dist-drafts/
+test-results/
+playwright-report/
+tests/**/*-snapshots/

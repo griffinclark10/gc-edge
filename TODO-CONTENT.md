@@ -27,7 +27,7 @@ resolved and the placeholder is gone from the source.
 - [ ] "Next, I want to…" line for the lab bench
 - [ ] Thesis "What I'd do now" section
 - [ ] Exp. 007 name, package name, repo, license, teacher model, and results as they come in
-- [ ] First field note (thesis rewrite)
+- [ ] First field note (thesis rewrite). **Drafted** in `src/content/notes/cars-that-borrow-the-roadsides-eyes.mdx` from the thesis PDF (facts only, Claude's wording). Rewrite in your voice, fill "What I took from it", add `date:`, set `draft: false`. That one change publishes `/notes/`, the nav item and `/rss.xml`.
 
 ## Placeholders in the source, by location
 
@@ -55,7 +55,8 @@ Everything below renders visibly on the site (dashed underline) unless marked _h
 - **Ticker glyphs (§9):** IBM Plex Mono has no Greek subset. Δ ħ ∇ ε ρ ₀ ✦ fall back per glyph to the system monospace; checked in Chrome on macOS, all render, no tofu.
 - **Spec sheet still says `PyTorch → ONNX → TensorRT`**, as the spec wrote it, while ONNX stays hidden in the instruments list until confirmed. If you haven't used ONNX on a real project, drop it from the spec-sheet line too.
 - **Card summaries are capped at 320 characters** by the content schema (§6.2); a longer one fails the build. Exp. 005 was reworded to 317 to fit (technical nouns kept, "health" and "updates" cut).
-- **Exp. 007 links nowhere yet:** its case study is `pageDraft: true` (the spec's draft gate), so it builds in `npm run dev` only and the featured card hides `read the lab report →` until the page goes public. Remove `pageDraft` to publish.
+- **Exp. 007 links nowhere yet:** its case study is `pageDraft: true` (the spec's draft gate), so it builds only in `npm run dev` / `npm run build:drafts`, and the featured card hides `read the lab report →` until the page goes public. Remove `pageDraft` to publish.
+- **Previewing drafts:** `npm run build:drafts` builds published + draft pages into `dist-drafts/` (never deployed). CI builds and tests it too, so the notes templates stay green before the first note goes live.
 - **Queue Hop images were anonymised** before going in the repo (M3): the line photo keeps only the annotated half, fully pixelated, with the model's head-dots redrawn; the app screenshots have venue photos and avatars pixelated. The unblurred originals are only in the old `chat-gsc` repo.
 - **Queue Hop report PDF is withheld.** It contains the un-pixelated app screenshots (teammates' and bystanders' faces, p.17) and a sign with a phone number (p.11), so it's not in the repo and the 002 page has no report link. To publish it, redact those pages, add it as `public/papers/queue-hop.pdf` and restore `links.report` in `queue-hop.mdx`. `helpinghand-asl.pdf` is published as-is, author emails included (Griffin's call, 2026-10-27).
 - **Case-study copy is sourced, not invented:** 001 from the thesis PDF, 002 from the final report, 003 from the paper. Where the spec's card copy and a source disagree, the case study follows the source and the disagreement is listed above.

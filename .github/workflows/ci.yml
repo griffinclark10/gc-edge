@@ -30,6 +30,14 @@ jobs:
         with:
           args: --config lychee.toml --root-dir "${{ github.workspace }}/dist" "dist/**/*.html"
           fail: true
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Accessibility, layout and keyboard checks (published pages)
+        run: npm run test:e2e
+      # Draft-only pages (notes, Exp. 007) are built into a separate folder and
+      # tested too, so the templates stay green before anything is published.
+      - name: Accessibility, layout and keyboard checks (draft pages)
+        run: npm run build:drafts && DIST=dist-drafts npm run test:e2e
       - name: Lighthouse CI
         run: npx --yes @lhci/cli@0.14.x autorun
       - uses: actions/upload-artifact@v4

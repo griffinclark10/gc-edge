@@ -1,0 +1,293 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import PaperFooter from '../../components/PaperFooter.astro';
+import Button from '../../components/Button.astro';
+import { SITE, formatDate, getPublishedNotes, readMinutes, type Note } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const notes = await getPublishedNotes();
+  return notes.map((note) => ({ params: { slug: note.id }, props: { note } }));
+}
+
+interface Props {
+  note: Note;
+}
+
+const { note } = Astro.props;
+const { Content } = await render(note);
+const d = note.data;
+const eyebrow = [
+  `N° ${d.number}`,
+  ...d.tags.map((t) => t.toUpperCase()),
+  formatDate(d.date),
+  `${readMinutes(note)} MIN`,
+].join(' · ');
+---
+
+<BaseLayout
+  title={`${d.title} · Griffin Clark`}
+  description={d.dek}
+  surface="paper"
+  ogType="article"
+>
+  <link
+    slot="head"
+    rel="alternate"
+    type="application/rss+xml"
+    title="Field notes"
+    href="/rss.xml"
+  />
+  <SiteHeader current="notes" />
+  <main id="main" class="container">
+    <article class="note">
+      <header>
+        <p class="eyebrow">{eyebrow}</p>
+        <h1>{d.title}</h1>
+        <p class="dek">{d.dek}</p>
+      </header>
+      <div class="note-body">
+        <Content />
+      </div>
+      <footer class="note-end">
+        <a class="back mono" href="/notes/">
+          ← all field notes
+        </a>
+        <div class="signal">
+          <p class="eyebrow">questions, corrections, a better method?</p>
+          <Button href={`mailto:${SITE.email}`} variant="primary">
+            {SITE.email}
+          </Button>
+        </div>
+      </footer>
+    </article>
+  </main>
+  <PaperFooter />
+</BaseLayout>
+
+<style>
+  .note {
+    padding-top: 72px;
+  }
+
+  header,
+  .note-body,
+  .note-end {
+    max-width: 68ch;
+  }
+
+  .eyebrow {
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: var(--fs-display-page);
+    font-weight: 800;
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    color: var(--pp-ink);
+  }
+
+  .dek {
+    margin: 28px 0 0;
+    font-size: 22px;
+    line-height: 1.45;
+    color: var(--pp-ink);
+  }
+
+  /* §5.4 body: 19px / 1.6 at a 68ch measure */
+  .note-body {
+    margin-top: 48px;
+    font-size: 19px;
+    line-height: 1.6;
+    color: var(--pp-body);
+  }
+
+  .note-body :global(h2) {
+    margin: 56px 0 16px;
+    font-size: clamp(28px, 3.4vw, 36px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--pp-ink);
+  }
+
+  .note-body :global(h3) {
+    margin: 40px 0 12px;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--pp-ink);
+  }
+
+  .note-body :global(p),
+  .note-body :global(ul),
+  .note-body :global(ol),
+  .note-body :global(blockquote) {
+    margin: 0 0 20px;
+  }
+
+  .note-body :global(li + li) {
+    margin-top: 6px;
+  }
+
+  .note-body :global(a) {
+    color: var(--pp-ink);
+    text-underline-offset: 3px;
+  }
+
+  .note-body :global(strong) {
+    color: var(--pp-ink-deep);
+  }
+
+  .note-body :global(blockquote) {
+    padding-left: 20px;
+    border-left: 3px solid var(--pp-ink);
+    color: var(--pp-ink);
+  }
+
+  .note-body :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+  }
+
+  /* inline code only */
+  .note-body :global(:not(pre) > code) {
+    padding: 1px 5px;
+    background: rgba(28, 61, 150, 0.08);
+    color: var(--pp-ink-deep);
+  }
+
+  /* fenced code: Shiki "blueprint" theme on --bp-deep; scrolls inside its own box */
+  .note-body :global(pre) {
+    margin: 28px 0;
+    padding: 20px 24px;
+    overflow-x: auto;
+    border: 2px solid var(--pp-ink);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .note-body :global(pre code) {
+    font-size: inherit;
+  }
+
+  .note-body :global(table) {
+    width: 100%;
+    margin: 28px 0;
+    border-collapse: collapse;
+    border: 2px solid var(--pp-ink);
+    background: var(--pp-card);
+    font-family: var(--font-mono);
+    font-size: 15px;
+    color: var(--pp-ink-deep);
+  }
+
+  .note-body :global(th),
+  .note-body :global(td) {
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid rgba(28, 61, 150, 0.18);
+  }
+
+  .note-body :global(thead th) {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--pp-muted);
+    border-bottom: 2px solid var(--pp-ink);
+  }
+
+  /* footnote refs */
+  .note-body :global(sup a) {
+    font-family: var(--font-mono);
+    font-size: 0.7em;
+    padding: 0 2px;
+    text-decoration: none;
+  }
+
+  /* end-of-post footnotes (narrow screens and screen readers) */
+  .note-body :global(.footnotes) {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--pp-ink);
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .note-body :global(.footnotes ol) {
+    padding-left: 20px;
+  }
+
+  .note-body :global(.sidenote) {
+    display: none;
+  }
+
+  /* §5.4: margin notes at ≥1100px; the end list stays for screen readers only */
+  @media (min-width: 1100px) {
+    .note-body :global(.sidenote) {
+      display: block;
+      float: right;
+      clear: right;
+      width: 240px;
+      margin: 4px -290px 16px 0;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--pp-muted);
+    }
+
+    .note-body :global(.sidenote-n) {
+      margin-right: 6px;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: var(--pp-ink);
+    }
+
+    .note-body :global(.footnotes) {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+  }
+
+  .note-end {
+    margin-top: 72px;
+    padding-top: 28px;
+    border-top: 3px solid var(--pp-ink);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px 40px;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .back {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 15px;
+    color: var(--pp-ink);
+  }
+
+  .signal .eyebrow {
+    margin-bottom: 12px;
+  }
+
+  @media (max-width: 720px) {
+    .note {
+      padding-top: 48px;
+    }
+
+    .dek {
+      font-size: 20px;
+    }
+
+    .note-body {
+      font-size: 18px;
+    }
+  }
+</style>

@@ -17,16 +17,31 @@ import { getListedExperiments } from '../lib/experiments';
 const experiments = await getListedExperiments();
 const featured = experiments.find((e) => e.data.featured);
 const grid = experiments.filter((e) => e !== featured);
+
+// §8 JSON-LD Person
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: SITE.name,
+  url: Astro.site?.href,
+  jobTitle: 'VP of Engineering',
+  alumniOf: { '@type': 'CollegeOrUniversity', name: "Queen's University" },
+  sameAs: [SITE.github, SITE.linkedin],
+  knowsAbout: ['computer vision', 'edge AI', 'NVIDIA Jetson', 'model quantisation', 'MLOps'],
+};
 ---
 
 <BaseLayout title={SITE.homeTitle} surface="blueprint">
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(person)} />
   <SiteHeader />
   <main id="main">
     <section id="top" class="container hero">
       <div class="hero-main">
         <p class="eyebrow">sheet 01 of 04 · frame 000417 · edge-01 · scale 1:1</p>
         <h1>
-          <DetectionBox label="person · id 07 · 0.98">Griffin</DetectionBox>
+          <DetectionBox label="person · id 07 · 0.98" lockOn>
+            Griffin
+          </DetectionBox>
           <br />
           <span class="surname">
             Clark<span class="stop">.</span>
