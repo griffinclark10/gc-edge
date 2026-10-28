@@ -4,7 +4,7 @@ export const SITE = {
   name: 'Griffin Clark',
   homeTitle: 'Griffin Clark · Edge computer vision engineer',
   description:
-    'Griffin Clark is an engineering physicist who puts computer vision on small hardware: NVIDIA Jetson fleets, microcontrollers, and the release, telemetry and benchmarking that keep models working in the field.',
+    'Griffin Clark is an engineering physicist who puts computer vision on small hardware: NVIDIA Jetson fleets, and the release, telemetry and benchmarking that keep models working in the field.',
   email: 'griffinclark10@gmail.com',
   github: 'https://github.com/griffinclark10',
   linkedin: 'https://www.linkedin.com/in/griffin-clark-a02513146/',

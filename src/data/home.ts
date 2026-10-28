@@ -4,7 +4,7 @@
 export const specSheet: [string, string][] = [
   ['model', 'G. Clark, B.Eng. (Engineering Physics)'],
   ['role', 'VP Engineering, hands-on'],
-  ['target hw', 'NVIDIA Jetson, ESP32, the cloud'],
+  ['target hw', 'NVIDIA Jetson, the cloud'],
   ['precision', 'INT8 models, FP64 opinions'],
   ['toolchain', 'PyTorch → ONNX → TensorRT'],
   ['base station', 'Vancouver, BC'],
@@ -44,8 +44,7 @@ export const worldline: WorldlineEvent[] = [
     from: '2024.06',
     to: '2025.08',
     event: 'E₅',
-    title:
-      'Software Developer II, MPL Enterprises [CONFIRM title: "Developer II" (2026 résumé) vs "Engineer II" (2025 résumé)]',
+    title: 'Software Engineer II, MPL Enterprises',
     copy: 'Full-stack tools and games for 100,000+ daily users; an LLM-powered language-learning tool; the GitHub Actions CI/CD pipeline that brought a legacy monorepo under automated builds.',
   },
   {
@@ -71,10 +70,10 @@ export const worldline: WorldlineEvent[] = [
   },
   {
     from: '2020.09',
-    to: '2022.01',
+    to: '2021.12',
     event: 'E₁ · origin',
     title: "Teaching Assistant, Queen's Engineering",
-    copy: "Ran weekly help sessions for 30+ students and marked 150+ assignments a week. Turns out explaining quantum mechanics at 9pm is good practice for writing docs. [CONFIRM: course; the old site's Q&A says a quantum physics class]",
+    copy: "Three semesters, a different course each time, including first-year advanced physics (PHYS 104) and electromagnetics. Ran weekly help sessions for 30+ students and marked 150+ assignments a week. Turns out explaining Maxwell's equations at 9pm is good practice for writing docs.",
   },
 ];
 
@@ -102,20 +101,20 @@ export const instruments: {
       'mmdet3d',
       'PointPillars',
       'P2PNet',
+      'GStreamer',
     ],
-    pending: ['ONNX', 'DeepStream / GStreamer', 'PyAV'],
+    pending: ['ONNX', 'DeepStream', 'PyAV'],
   },
   {
     label: 'INSTRUMENTS · EDGE & RELEASE',
     items: [
       'NVIDIA Jetson',
-      'ESP32',
+      'RTSP multi-camera video',
       'Docker (multi-arch)',
       'OTA updates',
       'GitHub Actions',
       'Linux',
     ],
-    pending: ['RTSP / multi-camera video'],
   },
   {
     label: 'INSTRUMENTS · PLATFORM',

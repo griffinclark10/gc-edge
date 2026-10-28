@@ -1,20 +1,17 @@
 ---
 id: '007'
 slug: distill-to-esp32
-title: 'Tell a $10 chip what to see.'
-kicker: 'EXP. 007 · OPEN SOURCE · IN PROGRESS'
-status: in-progress
+title: 'Tell a tiny chip what to see.'
+kicker: 'EXP. 007 · OPEN SOURCE · PLANNED'
+# An idea, not built yet (Griffin, 2026-10-28): nothing on the site may read as done.
+status: planned
 featured: true
 order: 1
-summary: "An open-source autodistill target for ESP32-class microcontrollers. A foundation model labels raw footage, a sub-1M-parameter detector trains on those labels, gets INT8-quantised and is flashed to the chip. Then the chip sends back the frames it isn't sure about."
-notes:
-  - '[CONFIRM: board price for the dev board actually used]'
+summary: "Planned: an open-source autodistill target for ESP32-class microcontrollers. A foundation model would label raw footage; a sub-1M-parameter detector would train on those labels, be INT8-quantised and flashed to the chip, then send back the frames it isn't sure about."
 terminal:
+  - '# planned interface, not built yet'
   - '$ distill "coffee mugs on a desk" \'
   - '--target esp32-s3 --flash'
-  - '✓ labelled [N] frames'
-  - '✓ trained · int8 · [SIZE] KB'
-  - '✓ flashed → /dev/ttyUSB0'
 tags:
   - autodistill
   - ESP-Detection
@@ -36,7 +33,7 @@ specimen:
   repo: 'github.com/griffinclark10/[FILL]'
 
 # ── case study: copy from SPEC §6.4, verbatim ──
-lede: "An open-source autodistill target that turns a sentence into a detector running on an ESP32, plus a study of what the big model's mistakes do to a model a thousand times smaller."
+lede: "A planned open-source autodistill target that would turn a sentence into a detector running on an ESP32, plus a study of what the big model's mistakes do to a model a thousand times smaller."
 pipeline:
   title: 'From a sentence to a flashed chip'
   steps:

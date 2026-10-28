@@ -8,22 +8,23 @@ resolved and the placeholder is gone from the source.
 
 - [ ] Bon public-safe metric for Exp. 005, and sign-off that the 005 card and worldline wording are OK to publish
 - [x] Toolchain: TensorRT confirmed (2026-10-27)
-- [ ] Toolchain, still open: ONNX? DeepStream/GStreamer? PyAV? RTSP multi-camera? (Only list what you've used in production or on a real project.)
-- [ ] MPL title: Software Developer II or Software Engineer II
+- [x] Toolchain: GStreamer and RTSP multi-camera confirmed (2026-10-28)
+- [ ] Toolchain, still open: ONNX? DeepStream? PyAV? (Only list what you've used in production or on a real project.)
+- [x] MPL title: Software Engineer II (2026-10-28)
 - [x] HelpingHand "Best Paper, CUCAI" confirmed (2026-10-27)
-- [ ] TA course (quantum physics?) and dates
-- [ ] Bon start date: résumé says Aug 2025
-- [ ] Wildfire smoke project on Jetson Orin Nano: real and built? Keep or delete Exp. 008
+- [x] TA: Sept 2020 → Dec 2021, three semesters, three different courses incl. PHYS 104 and electromagnetics (2026-10-28). Worldline copy now says Maxwell's equations; if second-year quantum was the third course, the old quantum joke can come back
+- [x] Bon start date: Aug 2025 (2026-10-28)
+- [x] Wildfire smoke: not completed; Exp. 008 deleted (2026-10-28)
 - [x] Queue Hop accuracy: 7.2% MAE on 500 held-out frames, from the final report (confirmed 2026-10-27)
-- [ ] ESP32 dev board and its actual price, for the "$10 chip" headline
-- [ ] HelpingHand dataset: the paper's method says Kaggle's ASL Alphabet set (87,000 images); the card and old site say Sign Language MNIST. The paper's "24 letters, no J or Z" fits MNIST. Which one? (Case study shows a `[CONFIRM]`; the card summary may need the same fix.)
-- [ ] HelpingHand card result: the paper reports 93% on the test set but **64% live**. The card says "93% accuracy · best paper". Suggest `93% test · 64% live · best paper`, which fits the honest-measurement pitch better.
-- [ ] HelpingHand role: the case study says "I worked on the Keras model and built the browser interface" (from the old site). Correct?
+- [x] ESP32 / Exp. 007: only an idea (2026-10-28). Now `status: planned`, "would"-tense copy, no ✓ results in the terminal mock, title "Tell a tiny chip what to see." (no price claim). ESP32 also removed from the spec sheet, instrument list and meta description so nothing implies hands-on ESP32 work
+- [x] HelpingHand dataset: per the paper, Kaggle's ASL Alphabet (87,000 images); card and case study updated (2026-10-28)
+- [x] HelpingHand card result: stays at 93% (2026-10-28)
+- [x] HelpingHand role: correct as written (2026-10-28)
 
 ## Content to supply (SPEC §11)
 
-- [ ] Domain name → `site` in `astro.config.mjs` (currently `https://example.com`)
-- [ ] Current general-purpose résumé PDF → `public/resume.pdf` (then remove the `resume.pdf` exclusion in `lychee.toml`)
+- [ ] Domain name → `site` in `astro.config.mjs` (currently `https://gc-edge.pages.dev`)
+- [ ] Current general-purpose résumé PDF → `public/resume.pdf` (in progress; then remove the `resume.pdf` exclusion in `lychee.toml`)
 - [ ] "Next, I want to…" line for the lab bench
 - [ ] Thesis "What I'd do now" section
 - [ ] Exp. 007 name, package name, repo, license, teacher model, and results as they come in
@@ -36,19 +37,13 @@ Everything below renders visibly on the site (dashed underline) unless marked _h
 
 | Where (file)                                       | Placeholder                                                                                                                                                     | Since |
 | -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| `astro.config.mjs`                                 | `[FILL: domain]`, `site` set to example.com (_hidden_)                                                                                                          | M1    |
+| `astro.config.mjs`                                 | `[FILL: domain]`, `site` set to gc-edge.pages.dev (_hidden_)                                                                                                    | M1    |
 | footer + hero buttons                              | `résumé.pdf` links to `/resume.pdf`, not there yet                                                                                                              | M1    |
-| Exp. 007 card (`distill-to-esp32.mdx`)             | `[CONFIRM: board price for the dev board actually used]`                                                                                                        | M2    |
-| Exp. 007 terminal mock                             | `[N]` frames, `[SIZE]` KB                                                                                                                                       | M2    |
 | Exp. 007 case study (_hidden_: `pageDraft`)        | specimen teacher, student params, license, repo `[FILL]`; tiles `[—]`; `[Δ]`, `[N]` seeds, `[PACKAGE-NAME]`; repo/write-up buttons hidden until they have links | M2–M3 |
-| Exp. 005 card (`edge-vision-in-production.mdx`)    | result `[CONFIRM: public-safe metric approved by Bon …]`; tag `multi-camera [CONFIRM: RTSP]`                                                                    | M2    |
+| Exp. 005 card (`edge-vision-in-production.mdx`)    | result `[CONFIRM: public-safe metric approved by Bon …]`                                                                                                        | M2    |
 | Exp. 001 case study (`cooperative-perception.mdx`) | "If I ran it again": `[FILL: what you'd do now …]`                                                                                                              | M3    |
-| Exp. 003 case study (`helpinghand-asl.mdx`)        | specimen dataset `[CONFIRM: Kaggle ASL Alphabet … or Sign Language MNIST …]`                                                                                    | M3    |
-| Exp. 008 (`wildfire-smoke-jetson.mdx`)             | status and whole card (_hidden_: `draft: true`)                                                                                                                 | M2    |
-| worldline E₅ (`src/data/home.ts`)                  | `[CONFIRM title: "Developer II" … vs "Engineer II" …]`                                                                                                          | M2    |
-| worldline E₁                                       | `[CONFIRM: course; the old site's Q&A says a quantum physics class]`                                                                                            | M2    |
 | lab bench                                          | `[FILL: one line, e.g. "work on the inference engine other people build on"]`                                                                                   | M2    |
-| instruments (`src/data/home.ts`, `pending`)        | ONNX, DeepStream / GStreamer, PyAV, RTSP / multi-camera (_hidden_ until confirmed, per §6.6)                                                                    | M2    |
+| instruments (`src/data/home.ts`, `pending`)        | ONNX, DeepStream, PyAV (_hidden_ until confirmed, per §6.6)                                                                                                     | M2    |
 
 ## Build notes for Griffin
 
