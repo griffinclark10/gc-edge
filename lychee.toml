@@ -7,4 +7,8 @@ exclude = [
   # [FILL] résumé PDF not supplied yet; remove this line once public/resume.pdf exists.
   "resume\\.pdf$",
   "^mailto:",
+  # The site's own absolute URLs (canonical, og:image, og:url) point at the deployed
+  # site, which can lag the build or not exist yet. Internal links are still checked
+  # as files in dist/. Update this when `site` in astro.config.mjs moves to the domain.
+  "^https://gc-edge\\.pages\\.dev",
 ]
