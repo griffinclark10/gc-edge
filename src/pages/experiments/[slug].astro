@@ -1,0 +1,380 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import PaperFooter from '../../components/PaperFooter.astro';
+import Fill from '../../components/Fill.astro';
+import StatusPill from '../../components/case/StatusPill.astro';
+import SpecimenCard from '../../components/case/SpecimenCard.astro';
+import PipelineFigure from '../../components/case/PipelineFigure.astro';
+import CaseSection from '../../components/case/CaseSection.astro';
+import ResultTile from '../../components/case/ResultTile.astro';
+import ResultsTable from '../../components/case/ResultsTable.astro';
+import EmptyPlot from '../../components/case/EmptyPlot.astro';
+import CaseFigure from '../../components/case/CaseFigure.astro';
+import LabLog from '../../components/case/LabLog.astro';
+import Reproduce from '../../components/case/Reproduce.astro';
+import ExperimentNav from '../../components/case/ExperimentNav.astro';
+import { getLiveExperiments, neighbours, type Experiment } from '../../lib/experiments';
+
+export async function getStaticPaths() {
+  const live = await getLiveExperiments();
+  return live.map((entry) => ({ params: { slug: entry.data.slug }, props: { entry, live } }));
+}
+
+interface Props {
+  entry: Experiment;
+  live: Experiment[];
+}
+
+const { entry, live } = Astro.props;
+const d = entry.data;
+const { Content } = await render(entry);
+const hasMethod = Boolean(entry.body?.trim());
+const { prev, next } = neighbours(live, entry);
+
+// §5.2: sections render only when their data exists. Section (§n) and figure
+// numbers are assigned in render order, so they stay sequential whatever is missing.
+let sectionCount = 0;
+let figureCount = 0;
+const section = (label: string) => `§${++sectionCount} · ${label.toUpperCase()}`;
+const figure = () => ++figureCount;
+
+const pipelineFig = d.pipeline ? figure() : 0;
+const hypothesisLabel = d.hypothesis ? section('hypothesis') : '';
+const questionsLabel = d.questions?.length ? section('questions') : '';
+const methodLabel = hasMethod ? section('method') : '';
+const results = d.results;
+const hasResults = Boolean(
+  results && (results.tiles.length || results.table || results.plot || results.gallery.length),
+);
+const resultsLabel = hasResults ? section('results') : '';
+const plotFig = results?.plot ? figure() : 0;
+const galleryFigs = (results?.gallery ?? []).map(() => figure());
+const logLabel = d.log ? section('lab log') : '';
+const reproduceLabel = d.reproduce ? section('reproduce it') : '';
+const reflectionLabel = d.reflection ? section("what I'd do now") : '';
+
+const pill =
+  d.status === 'shipped'
+    ? { text: `shipped${d.date ? ` · ${d.date}` : ''}`, tone: 'ink' as const }
+    : d.status === 'in-progress'
+      ? { text: 'status: in progress · results pending', tone: 'accent' as const }
+      : { text: 'status: planned', tone: 'accent' as const };
+---
+
+<BaseLayout title={`${d.title} · Griffin Clark`} description={d.summary} surface="paper">
+  <meta slot="head" name="keywords" content={d.tags.join(', ')} />
+  <SiteHeader current="experiments" />
+  <main id="main">
+    <section class="container hero" aria-labelledby="case-title">
+      <p class="crumbs mono">
+        <a href="/#experiments">experiments</a> / {d.id}
+      </p>
+      <div class="hero-row">
+        <div class="hero-main">
+          <StatusPill text={pill.text} tone={pill.tone} />
+          <h1 id="case-title">
+            <Fill text={d.title} />
+          </h1>
+          {d.notes.map((note) => (
+            <p class="note mono">
+              <Fill text={note} />
+            </p>
+          ))}
+          {d.lede && (
+            <p class="lede">
+              <Fill text={d.lede} />
+            </p>
+          )}
+          {d.tags.length > 0 && (
+            <ul class="tags mono" aria-label="Tags">
+              {d.tags.map((tag) => (
+                <li>
+                  <Fill text={tag} />
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+        <SpecimenCard id={d.id} specimen={d.specimen} links={d.links} />
+      </div>
+    </section>
+
+    {d.pipeline && <PipelineFigure fig={pipelineFig} pipeline={d.pipeline} />}
+
+    {(d.hypothesis || d.questions?.length) && (
+      <section class="container two-up" aria-label="Hypothesis and questions">
+        {d.hypothesis && (
+          <div>
+            <p class="eyebrow">{hypothesisLabel}</p>
+            <p class="pull">
+              <Fill text={d.hypothesis} />
+            </p>
+          </div>
+        )}
+        {d.questions?.length && (
+          <div>
+            <p class="eyebrow">{questionsLabel}</p>
+            <ol class="questions">
+              {d.questions.map((q) => (
+                <li>
+                  <Fill text={q} />
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
+      </section>
+    )}
+
+    {hasMethod && (
+      <CaseSection eyebrow={methodLabel} id="method">
+        <div class="prose">
+          <Content />
+        </div>
+      </CaseSection>
+    )}
+
+    {hasResults && results && (
+      <CaseSection eyebrow={resultsLabel} title={results.title} id="results">
+        {results.tiles.length > 0 && (
+          <div class="tiles">
+            {results.tiles.map((tile) => (
+              <ResultTile {...tile} />
+            ))}
+          </div>
+        )}
+        {results.table && <ResultsTable n={1} {...results.table} />}
+        {results.plot && (
+          <EmptyPlot fig={plotFig} caption={results.plot.caption} yLabel={results.plot.yLabel} />
+        )}
+        {results.note && (
+          <p class="results-note">
+            <Fill text={results.note} />
+          </p>
+        )}
+        {results.gallery.length > 0 && (
+          <div class="gallery">
+            {results.gallery.map((g, i) => (
+              <CaseFigure fig={galleryFigs[i]} {...g} />
+            ))}
+          </div>
+        )}
+      </CaseSection>
+    )}
+
+    {d.log && (
+      <CaseSection eyebrow={logLabel} title={d.log.title} id="log">
+        <LabLog entries={d.log.entries} />
+      </CaseSection>
+    )}
+
+    {d.reproduce && (
+      <CaseSection eyebrow={reproduceLabel} title={d.reproduce.title} id="reproduce">
+        <Reproduce lines={d.reproduce.lines} buttons={d.reproduce.buttons} />
+      </CaseSection>
+    )}
+
+    {d.reflection && (
+      <CaseSection eyebrow={reflectionLabel} title={d.reflection.title} id="reflection">
+        <p class="reflection">
+          <Fill text={d.reflection.text} />
+        </p>
+      </CaseSection>
+    )}
+
+    <ExperimentNav prev={prev} next={next} />
+  </main>
+  <PaperFooter />
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-top: 72px;
+  }
+
+  .crumbs {
+    margin: 0 0 28px;
+    font-size: 13px;
+    color: var(--pp-muted);
+  }
+
+  .crumbs a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--pp-muted);
+  }
+
+  .hero-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 48px;
+    align-items: flex-start;
+  }
+
+  .hero-main {
+    flex: 999 1 560px;
+    min-width: 0;
+  }
+
+  h1 {
+    margin: 20px 0 0;
+    font-size: var(--fs-display-page);
+    font-weight: 800;
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    color: var(--pp-ink);
+  }
+
+  .note {
+    margin: 16px 0 0;
+    font-size: 13px;
+    color: var(--pp-muted);
+  }
+
+  .lede {
+    margin: 32px 0 0;
+    max-width: 640px;
+    font-size: 22px;
+    line-height: 1.45;
+    color: var(--pp-ink);
+  }
+
+  .tags {
+    margin: 28px 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 12px;
+  }
+
+  .tags li {
+    padding: 3px 8px;
+    border: 1px solid var(--pp-ink);
+    color: var(--pp-ink);
+  }
+
+  .two-up {
+    padding-top: 96px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 48px;
+  }
+
+  .two-up > div {
+    flex: 1 1 320px;
+    min-width: 0;
+  }
+
+  .two-up .eyebrow {
+    margin-bottom: 12px;
+  }
+
+  .pull {
+    margin: 0;
+    font-size: clamp(28px, 3.4vw, 40px);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--pp-ink);
+  }
+
+  .questions {
+    margin: 0;
+    padding-left: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-size: 19px;
+    line-height: 1.45;
+    color: var(--pp-ink-deep);
+  }
+
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+
+  .results-note,
+  .reflection {
+    margin: 24px 0 0;
+    max-width: 68ch;
+    font-size: 19px;
+    line-height: 1.6;
+    color: var(--pp-body);
+  }
+
+  .gallery {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    align-items: start;
+  }
+
+  /* MDX body ("Method"): long-form reading, §5.4 measure */
+  .prose {
+    max-width: 68ch;
+    font-size: 19px;
+    line-height: 1.6;
+    color: var(--pp-body);
+  }
+
+  .prose :global(h2) {
+    margin: 0 0 20px;
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    color: var(--pp-ink);
+  }
+
+  .prose :global(h2:not(:first-child)) {
+    margin-top: 56px;
+    font-size: clamp(26px, 3vw, 32px);
+  }
+
+  .prose :global(p),
+  .prose :global(ul),
+  .prose :global(ol) {
+    margin: 0 0 18px;
+  }
+
+  .prose :global(li + li) {
+    margin-top: 6px;
+  }
+
+  .prose :global(strong) {
+    color: var(--pp-ink-deep);
+  }
+
+  .prose :global(a) {
+    color: var(--pp-ink);
+    text-underline-offset: 3px;
+  }
+
+  @media (max-width: 720px) {
+    .hero {
+      padding-top: 48px;
+    }
+
+    .two-up {
+      padding-top: 72px;
+    }
+
+    .lede {
+      font-size: 20px;
+    }
+
+    .prose,
+    .results-note,
+    .reflection {
+      font-size: 18px;
+    }
+  }
+</style>

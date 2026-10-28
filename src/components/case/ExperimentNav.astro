@@ -1,0 +1,77 @@
+---
+import Fill from '../Fill.astro';
+import { experimentHref, type Experiment } from '../../lib/experiments';
+
+interface Props {
+  prev?: Experiment;
+  next?: Experiment;
+}
+
+const { prev, next } = Astro.props;
+---
+
+{(prev || next) && (
+  <nav aria-label="More experiments" class="container exp-nav">
+    {prev ? (
+      <a href={experimentHref(prev)} class="prev">
+        <span class="dir mono">← previous · EXP. {prev.data.id}</span>
+        <span class="title">
+          <Fill text={prev.data.title} />
+        </span>
+      </a>
+    ) : (
+      <span aria-hidden="true" />
+    )}
+    {next && (
+      <a href={experimentHref(next)} class="next">
+        <span class="dir mono">next · EXP. {next.data.id} →</span>
+        <span class="title">
+          <Fill text={next.data.title} />
+        </span>
+      </a>
+    )}
+  </nav>
+)}
+
+<style>
+  .exp-nav {
+    padding-top: 96px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  a {
+    display: block;
+    padding: 24px;
+    border: 2px solid var(--pp-ink);
+    background: var(--pp-card);
+    color: var(--pp-ink);
+    text-decoration: none;
+    transition:
+      transform 0.15s,
+      box-shadow 0.15s;
+  }
+
+  a:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--pp-ink);
+  }
+
+  .next {
+    text-align: right;
+  }
+
+  .dir {
+    font-size: 13px;
+    color: var(--pp-muted);
+  }
+
+  .title {
+    display: block;
+    margin-top: 6px;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+</style>

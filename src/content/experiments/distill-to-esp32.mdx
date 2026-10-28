@@ -34,4 +34,65 @@ specimen:
   built on: 'autodistill, ESP-Detection'
   license: '[FILL]'
   repo: 'github.com/griffinclark10/[FILL]'
+
+# ── case study: copy from SPEC §6.4, verbatim ──
+lede: "An open-source autodistill target that turns a sentence into a detector running on an ESP32, plus a study of what the big model's mistakes do to a model a thousand times smaller."
+pipeline:
+  title: 'From a sentence to a flashed chip'
+  steps:
+    - label: 'prompt'
+      text: '"coffee mugs on a desk"'
+    - label: 'teacher'
+      text: 'foundation model labels raw footage'
+    - label: 'student'
+      text: 'tiny detector trains on those labels'
+    - label: 'squeeze'
+      text: 'int8 quantisation, calibrated'
+    - label: 'flash'
+      text: 'runs on the chip, offline'
+  loop:
+    label: 'feedback loop'
+    text: 'frames the chip is unsure about go back to the teacher, get relabelled, and the next model ships over the air'
+hypothesis: 'Foundation models mislabel things. A model a thousand times smaller has no capacity to ignore those mistakes, so it learns them.'
+questions:
+  - 'How much accuracy does a microcontroller detector lose when trained on teacher labels instead of human ones?'
+  - 'Does that gap shrink or grow as the student gets smaller?'
+  - 'How many frames does the feedback loop need to send back to close it?'
+results:
+  title: 'Measured on real chips'
+  tiles:
+    - label: 'ACCURACY · mAP@0.5'
+      sub: 'vs human labels: [Δ]'
+    - label: 'LATENCY · per frame'
+      unit: 'ms'
+      sub: 'ESP32-S3, incl. pre/post'
+    - label: 'ENERGY · per inference'
+      unit: 'mJ'
+      sub: 'measured at the supply rail'
+    - label: 'MODEL · on flash'
+      unit: 'KB'
+      sub: 'int8 weights'
+  plot:
+    caption: 'teacher label noise (%) → · one line per student size · error bars = [N] seeds'
+    yLabel: 'student mAP@0.5'
+log:
+  title: 'What happened, in order'
+  entries:
+    - status: planned
+      title: 'First prompt-to-flash run, end to end'
+    - status: planned
+      title: 'Label-noise study across four tasks'
+    - status: planned
+      title: 'Closing the loop over the air'
+reproduce:
+  title: 'Run it on your own desk'
+  lines:
+    - '# planned interface, subject to change'
+    - '$ pip install [PACKAGE-NAME]'
+    - '$ distill "birds at the feeder" --video ./feeder.mp4 --target esp32-s3'
+    - '$ distill flash --port /dev/ttyUSB0'
+  # hrefs land when the repo is public and the write-up (field note 002/003) exists
+  buttons:
+    - label: 'view the repo →'
+    - label: 'read the write-up'
 ---

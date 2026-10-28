@@ -1,0 +1,67 @@
+---
+import Fill from '../Fill.astro';
+import Button from '../Button.astro';
+
+interface Props {
+  lines: string[];
+  buttons: { label: string; href?: string }[];
+}
+
+const { lines } = Astro.props;
+// No links to nowhere: a button only renders once it has a destination.
+const buttons = Astro.props.buttons.filter((b): b is { label: string; href: string } =>
+  Boolean(b.href),
+);
+---
+
+<div class="terminal mono" tabindex="0" role="region" aria-label="Commands">
+  {lines.map((line) => (
+    <p class:list={{ comment: line.startsWith('#') }}>
+      <Fill text={line} />
+    </p>
+  ))}
+</div>
+{buttons.length > 0 && (
+  <div class="actions">
+    {buttons.map((b, i) => (
+      <Button href={b.href} variant={i === 0 ? 'primary' : 'secondary'}>
+        {b.label}
+      </Button>
+    ))}
+  </div>
+)}
+
+<style>
+  .terminal {
+    padding: 28px;
+    overflow-x: auto;
+    background: var(--pp-ink);
+    color: var(--pp-ground);
+    font-size: 15px;
+    line-height: 1.9;
+    box-shadow: 8px 8px 0 var(--accent);
+  }
+
+  .terminal p {
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  .comment {
+    color: var(--bp-muted);
+  }
+
+  .actions {
+    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  @media (max-width: 720px) {
+    .terminal {
+      padding: 20px;
+      font-size: 14px;
+    }
+  }
+</style>

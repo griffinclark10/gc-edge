@@ -17,4 +17,66 @@ tags:
   - CUDA
 illustration: Exp001
 hasPage: true
+
+# ── case study. Facts from the thesis (public/papers/cooperative-perception-thesis.pdf) ──
+lede: "My undergraduate thesis: 3D object detection for a car that can borrow a roadside sensor's view, and a measurement of what sharing features, rather than raw points or finished boxes, is worth."
+date: '2023.04'
+specimen:
+  supervisor: 'Dr. Farhana Zulkernine, BAMLAB'
+  dataset: 'DAIR-V2X (vehicle + roadside)'
+  model: 'CoAlign, PointPillars encoder'
+  stack: 'PyTorch, mmdet3d, CUDA'
+  compute: "Queen's computing cluster"
+links:
+  report: '/papers/cooperative-perception-thesis.pdf'
+hypothesis: 'Fusing vehicle and roadside LiDAR at the feature level should beat early and late fusion on accuracy, while sending far fewer bytes than raw point clouds.'
+questions:
+  - 'How much average precision does intermediate fusion gain over early and late fusion on real vehicle-to-infrastructure data?'
+  - "Can it get there while transmitting closer to late fusion's bytes than early fusion's?"
+results:
+  title: 'Measured on DAIR-V2X'
+  tiles:
+    - label: 'ACCURACY · AP@0.5'
+      value: '0.772'
+      sub: 'intermediate fusion'
+    - label: 'STRICTER · AP@0.7'
+      value: '0.627'
+      sub: 'same model'
+    - label: 'VS EARLY FUSION · AP@0.5'
+      value: '+0.043'
+      sub: '0.729 → 0.772'
+    - label: 'VS LATE FUSION · AP@0.5'
+      value: '+0.056'
+      sub: '0.716 → 0.772'
+  table:
+    caption: "AP by fusion method. Baseline rows are the DAIR-V2X authors' published numbers; CoAlign rows are my runs."
+    columns: ['model', 'fusion', 'dataset', 'AP@0.5', 'AP@0.7']
+    rows:
+      - ['DAIR-V2X baseline', 'early', 'DAIR-V2X Sync', '0.537', '—']
+      - ['DAIR-V2X baseline', 'late', 'DAIR-V2X Sync', '0.480', '—']
+      - ['CoAlign', 'early', 'DAIR-V2X, 360° labels', '0.729', '0.596']
+      - ['CoAlign', 'late', 'DAIR-V2X, 360° labels', '0.716', '0.573']
+      - ['CoAlign', 'intermediate', 'DAIR-V2X, 360° labels', '0.772', '0.627']
+    highlight: 4
+    note: "The top and bottom halves aren't a strict like-for-like: the baselines were scored on the DAIR-V2X Sync split as published (53.73% and 47.96%), mine on CoAlign's 360° annotations. Bytes transmitted are left out on purpose: the thesis only estimated them to an order of magnitude, which is too coarse to answer question 2."
+  gallery:
+    - src: '../../assets/experiments/001/thesis1.png'
+      alt: 'A LiDAR point cloud of a busy intersection seen from a roadside unit, with coloured 3D boxes around cars, pedestrians and cyclists.'
+      caption: 'one DAIR-V2X frame from the roadside sensor, with its labelled 3D boxes'
+    - src: '../../assets/experiments/001/thesis2.png'
+      alt: "Bird's-eye view of a fused point cloud: red predicted boxes overlap green ground-truth boxes, each prediction labelled with a score."
+      caption: "final intermediate-fusion predictions (red) against labels (green), bird's-eye view"
+reflection:
+  title: 'If I ran it again'
+  text: "[FILL: what you'd do now: deploying this on edge hardware, and what you'd measure differently]"
 ---
+
+## From plan A to CoAlign
+
+The goal was to add intermediate fusion (spatial- and channel-adaptive feature fusion) to the open-source DAIR-V2X codebase, then compare it against the early and late fusion that codebase already shipped. DAIR-V2X is the only public dataset that is both real-world and vehicle-to-everything: about 70,000 LiDAR point clouds and camera frames from cars and roadside units.
+
+Plan A didn't survive contact with the code. Every error I fixed in the DAIR-V2X pipeline (mmdet3d, pypcd, a conversion to KITTI format) surfaced another, and contacting the authors and filing issues on their GitHub didn't unblock it. In March 2023 the CoAlign authors released a cooperative-perception model with intermediate fusion for DAIR-V2X built in, so I switched.
+
+CoAlign encodes each agent's point cloud with PointPillars, corrects the relative pose between the vehicle and the roadside unit with an agent-object pose graph, then fuses their feature maps before detection. I trained its early, late and intermediate fusion variants (the intermediate model for 30 epochs) and scored all three at AP@0.5 and AP@0.7.
+
+The work ran in PyTorch with CUDA on the Queen's computing cluster, supervised by Dr. Farhana Zulkernine at BAMLAB.

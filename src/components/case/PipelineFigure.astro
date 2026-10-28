@@ -1,0 +1,128 @@
+---
+import Fill from '../Fill.astro';
+
+interface Props {
+  fig: number;
+  pipeline: {
+    title: string;
+    steps: { label: string; text: string }[];
+    loop?: { label: string; text: string };
+  };
+}
+
+const { fig, pipeline } = Astro.props;
+const { title, steps, loop } = pipeline;
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+
+<section class="pipeline" aria-labelledby="fig-apparatus">
+  <div class="container inner">
+    <p class="eyebrow">FIG. {fig} · APPARATUS</p>
+    <h2 id="fig-apparatus">{title}</h2>
+    <ol class="steps mono">
+      {steps.map((step, i) => (
+        <li class:list={{ final: i === steps.length - 1 }}>
+          <span class="label">
+            {pad(i + 1)} · {step.label}
+          </span>
+          <span class="text">
+            <Fill text={step.text} />
+          </span>
+        </li>
+      ))}
+    </ol>
+    {loop && (
+      <div class="loop mono">
+        <span class="loop-label">
+          {pad(steps.length + 1)} · {loop.label} ↺
+        </span>
+        <span>
+          <Fill text={loop.text} />
+        </span>
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  /* §4.4 PipelineFigure: full-bleed ink band on the paper page */
+  .pipeline {
+    --focus: var(--accent);
+    background: var(--pp-ink);
+    color: var(--pp-ground);
+  }
+
+  .inner {
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+
+  .eyebrow {
+    margin-bottom: 12px;
+    color: var(--bp-muted);
+  }
+
+  h2 {
+    margin: 0 0 40px;
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+
+  .steps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    font-size: 14px;
+  }
+
+  li {
+    min-height: 120px;
+    padding: 16px;
+    border: 2px solid var(--pp-ground);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .label {
+    color: var(--bp-muted);
+  }
+
+  .text {
+    font-size: 16px;
+  }
+
+  /* the "flash" step: the one place yellow fills on the paper page */
+  li.final {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bp-deep);
+  }
+
+  li.final .label {
+    color: var(--bp-deep);
+    font-weight: 600;
+  }
+
+  .loop {
+    margin-top: 12px;
+    padding: 14px 16px;
+    border: 2px dashed var(--accent);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    align-items: center;
+    font-size: 14px;
+    color: var(--bp-muted);
+  }
+
+  .loop-label {
+    color: var(--accent);
+    font-weight: 600;
+  }
+</style>

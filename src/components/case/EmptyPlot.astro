@@ -1,0 +1,122 @@
+---
+import Fill from '../Fill.astro';
+
+// §4.4 EmptyPlot: stands in for a chart until real results exist.
+interface Props {
+  fig: number;
+  caption: string;
+  yLabel: string;
+}
+
+const { fig, caption, yLabel } = Astro.props;
+---
+
+<figure class="plot">
+  <div class="frame">
+    <p class="y-label mono">{yLabel}</p>
+    <div class="area">
+      <div class="empty">
+        <span class="chip mono">data · n = 0 · 0.00</span>
+        <p class="mono">
+          no results detected yet.
+          <br />
+          check back after the experiment runs.
+        </p>
+      </div>
+    </div>
+  </div>
+  <figcaption class="mono">
+    FIG. {fig} · <Fill text={caption} />
+  </figcaption>
+</figure>
+
+<style>
+  .plot {
+    margin: 24px 0 0;
+    padding: 24px;
+    border: 2px solid var(--pp-ink);
+    background: var(--pp-card);
+  }
+
+  .frame {
+    display: flex;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .y-label {
+    margin: 0;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    text-align: center;
+    font-size: 13px;
+    color: var(--pp-muted);
+  }
+
+  .area {
+    flex: 1;
+    min-width: 0;
+    height: 340px;
+    border-left: 2px solid var(--pp-ink);
+    border-bottom: 2px solid var(--pp-ink);
+    background-image:
+      linear-gradient(rgba(28, 61, 150, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(28, 61, 150, 0.1) 1px, transparent 1px);
+    background-size: 48px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 12px 12px;
+  }
+
+  .empty {
+    position: relative;
+    max-width: 100%;
+    padding: 28px 36px;
+    border: 3px dashed var(--pp-ink);
+    background: var(--pp-card);
+  }
+
+  .empty p {
+    margin: 0;
+    text-align: center;
+    font-size: 15px;
+    color: var(--pp-ink-deep);
+  }
+
+  .chip {
+    position: absolute;
+    top: -30px;
+    left: -3px;
+    padding: 3px 8px;
+    background: var(--accent);
+    color: var(--bp-deep);
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  figcaption {
+    margin: 14px 0 0 32px;
+    font-size: 13px;
+    color: var(--pp-muted);
+  }
+
+  @media (max-width: 720px) {
+    .plot {
+      padding: 16px;
+    }
+
+    .area {
+      height: 260px;
+    }
+
+    .empty {
+      padding: 20px;
+    }
+
+    figcaption {
+      margin-left: 0;
+    }
+  }
+</style>

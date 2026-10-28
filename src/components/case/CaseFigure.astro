@@ -1,0 +1,68 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Fill from '../Fill.astro';
+
+interface Props {
+  fig: number;
+  src: ImageMetadata;
+  alt: string;
+  caption: string;
+}
+
+const { fig, src, alt, caption } = Astro.props;
+// Landscape figures span the full row; portrait ones (app screenshots) sit side by side.
+const wide = src.width / src.height > 1.2;
+const widths = [...new Set([400, 800, 1200, src.width].filter((w) => w <= src.width))];
+// Never upscale past 1.5× the source, or small figures (thesis1 is 424px) turn to mush.
+const maxWidth = `${Math.round(src.width * 1.5)}px`;
+const sizes = wide ? '(min-width: 1200px) 1150px, 100vw' : '(min-width: 720px) 360px, 100vw';
+---
+
+<figure class:list={['photo', { wide }]}>
+  <Image
+    src={src}
+    alt={alt}
+    widths={widths}
+    sizes={sizes}
+    style={{ maxWidth: `min(100%, ${maxWidth})` }}
+  />
+  <figcaption class="mono">
+    FIG. {fig} · <Fill text={caption} />
+  </figcaption>
+</figure>
+
+<style>
+  .photo {
+    margin: 0;
+    padding: 12px;
+    border: 2px solid var(--pp-ink);
+    background: var(--pp-card);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .wide {
+    grid-column: 1 / -1;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    margin-inline: auto;
+  }
+
+  .photo:not(.wide) img {
+    width: auto;
+    max-width: 100%;
+    max-height: 640px;
+    margin-inline: auto;
+  }
+
+  figcaption {
+    margin-top: 12px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--pp-muted);
+  }
+</style>

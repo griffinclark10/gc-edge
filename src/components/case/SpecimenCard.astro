@@ -1,0 +1,105 @@
+---
+import Fill from '../Fill.astro';
+
+interface Props {
+  id: string;
+  specimen?: Record<string, string>;
+  links?: { repo?: string; report?: string; demo?: string };
+}
+
+const { id, specimen = {}, links = {} } = Astro.props;
+const rows = Object.entries(specimen);
+const stripProtocol = (url: string) => url.replace(/^https?:\/\//, '');
+---
+
+<aside class="specimen" aria-label="Specimen card">
+  <p class="head mono">SPECIMEN · EXP. {id}</p>
+  <dl class="mono">
+    {rows.map(([key, value]) => (
+      <>
+        <dt>{key}</dt>
+        <dd>
+          {key === 'repo' && links.repo ? (
+            <a href={links.repo}>
+              <Fill text={value} />
+            </a>
+          ) : (
+            <Fill text={value} />
+          )}
+        </dd>
+      </>
+    ))}
+    {links.repo && !specimen.repo && (
+      <>
+        <dt>repo</dt>
+        <dd>
+          <a href={links.repo}>{stripProtocol(links.repo)}</a>
+        </dd>
+      </>
+    )}
+    {links.demo && (
+      <>
+        <dt>demo</dt>
+        <dd>
+          <a href={links.demo}>{stripProtocol(links.demo)}</a>
+        </dd>
+      </>
+    )}
+    {links.report && (
+      <>
+        <dt>report</dt>
+        <dd>
+          <a href={links.report}>paper / report (PDF)</a>
+        </dd>
+      </>
+    )}
+  </dl>
+</aside>
+
+<style>
+  .specimen {
+    flex: 0 1 380px;
+    min-width: 0;
+    border: 3px solid var(--pp-ink);
+    background: var(--pp-card);
+  }
+
+  .head {
+    margin: 0;
+    padding: 12px 18px;
+    background: var(--pp-ink);
+    color: var(--pp-ground);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+  }
+
+  dl {
+    margin: 0;
+    padding: 18px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+    gap: 12px;
+    font-size: 14px;
+  }
+
+  dt {
+    color: var(--pp-muted);
+  }
+
+  dd {
+    margin: 0;
+    color: var(--pp-ink-deep);
+    overflow-wrap: anywhere;
+  }
+
+  a {
+    color: var(--pp-ink);
+    text-underline-offset: 3px;
+  }
+
+  @media (max-width: 720px) {
+    .specimen {
+      max-width: 480px;
+    }
+  }
+</style>

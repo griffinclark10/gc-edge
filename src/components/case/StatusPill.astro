@@ -1,0 +1,42 @@
+---
+interface Props {
+  text: string;
+  /** accent = yellow (in progress / planned) · ink = blue (shipped, dates) */
+  tone?: 'accent' | 'ink';
+  size?: 'sm' | 'md';
+}
+
+const { text, tone = 'accent', size = 'md' } = Astro.props;
+---
+
+<span class:list={['pill', 'mono', tone, size]}>{text}</span>
+
+<style>
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .md {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+
+  .sm {
+    padding: 1px 6px;
+    font-size: 12px;
+  }
+
+  .accent {
+    background: var(--accent);
+    color: var(--bp-deep);
+  }
+
+  .ink {
+    background: var(--pp-ink);
+    color: var(--pp-card);
+  }
+</style>

@@ -6,8 +6,8 @@ kicker: 'EXP. 002 · CAPSTONE · A+'
 status: shipped
 order: 4
 summary: 'Crowd counting in the wild: a point-based P2PNet model counting a real queue outside the campus engineering bar, through occlusion and bad lighting, with live counts and wait-time estimates in a React Native app. I built the app and its data path and helped train the model, in a team of five.'
-# Fallback if no accuracy figure exists: A+, and a shorter line
-result: '[CONFIRM: count accuracy / MAE if known]'
+# 7.2% MAE on 500 held-out frames, from the final report; confirmed by Griffin 2026-10-27
+result: 'count error 7.2% MAE · 500 test images'
 tags:
   - crowd counting
   - P2PNet
@@ -18,4 +18,72 @@ illustration: Exp002
 hasPage: true
 links:
   repo: 'https://github.com/Jonah1234567/QueueHop'
+  # report PDF withheld until redacted: it has un-pixelated faces and a phone number
+
+# ── case study. Facts from the team's final report (not published; see TODO-CONTENT.md) ──
+lede: 'A fourth-year design project: count the line outside Clark Hall Pub with a camera and a crowd-counting model, and tell students the wait before they walk over. Five of us built it; I built the app and the data path, and helped train the model.'
+date: '2022.12'
+specimen:
+  team: '5 · I did software and app design'
+  model: 'P2PNet (point-based crowd counting)'
+  training: '998 Clark Hall frames + ShanghaiTech'
+  app: 'React Native, JavaScript'
+  data path: 'PyAutoGUI → PyTorch → Google Sheets API'
+  grade: 'A+'
+results:
+  title: 'Measured against the brief'
+  tiles:
+    - label: 'COUNT ERROR · MAE'
+      value: '7.2%'
+      sub: '500 held-out frames · goal ≤ 10%'
+    - label: 'PROCESSING · per image'
+      value: '7.75 s'
+      sub: 'goal ≤ 1 min'
+    - label: 'APP · frame rate'
+      value: '60 fps'
+      sub: 'goal ≥ 30 fps'
+    - label: 'WAIT TIME · accuracy'
+      value: 'untested'
+      sub: 'estimator built, never validated'
+  table:
+    caption: 'targets against measurements for the model, pipeline and app, from the final report'
+    columns: ['objective', 'target', 'measured', 'result']
+    rows:
+      - ['line-length estimate', 'within 1 person or 10%', '7.2% error', 'pass']
+      - ['time to process an image', '≤ 1 min', '7.75 s', 'pass']
+      - ['app frame rate', '≥ 30 fps', '60 fps', 'pass']
+      - ['wait-time accuracy', '≤ 20% error below capacity', 'built, not tested', 'fail']
+    note: "The capacity sensor at the door was Bryn's subsystem; its numbers are in the report."
+  gallery:
+    - src: '../../assets/experiments/002/queuehop-line.png'
+      alt: 'A heavily pixelated photo of students lined up outside Clark Hall, with a red dot on each head the model detected.'
+      caption: "P2PNet's head detections (red dots) on a frame of the line. Faces pixelated for this page."
+    - src: '../../assets/experiments/002/queuehop-home.png'
+      alt: 'Phone screenshot of the Queue Hop home screen: a search bar and a Clark Hall Pub card showing a 35-minute wait and 72 people in line.'
+      caption: 'home screen. Venue photos and avatars pixelated for this page.'
+    - src: '../../assets/experiments/002/queuehop-details.png'
+      alt: "Phone screenshot of the Clark Hall Pub details screen: four tiles for queue count, estimated wait, today's average wait and people inside, and I'm-in-line buttons."
+      caption: 'details screen, with the four metrics and the in-line timer'
 ---
+
+## Who did what
+
+Five of us built Queue Hop for ENPH 454, the Engineering Physics design course. Roles as the final report lists them:
+
+- **Alex**: machine-learning architect, data analyst
+- **Bryn**: electrical systems (the doorway capacity sensor)
+- **Jonah**: machine-learning architect, cloud
+- **Julia**: machine-learning architect, safety officer
+- **Me**: software and app design. I built the React Native app, carried the model's output to it through the Google Sheets API, and helped with the P2PNet model.
+
+## How it worked
+
+A camera on a tripod looked down on the line through a window, and a laptop saved a snapshot every 10 seconds. The pipeline grabbed frames with PyAutoGUI, preprocessed them with PyTorch, ran P2PNet, and wrote the count to a Google Sheet that the app read: 10.2 seconds end to end.
+
+P2PNet predicts a point per head rather than a density map, and it had to hold up whether the line was sparse or packed. We trained it on 998 annotated Clark Hall frames plus the ShanghaiTech crowd dataset, and held 500 frames back to test it. Night frames were dropped: window glare made them unusable.
+
+The app has three screens: home, venue details and profile. Clark Hall Pub is the only venue wired to real data; the others are filler. Wait time is the head count multiplied by 72 seconds, the average time per person we measured over 221 observations.
+
+## What didn't get done
+
+The wait-time estimate was built but never validated against real waits: the one goal in the brief we missed. And while each subsystem (camera, model, door sensor, app) worked on its own, full end-to-end integration was left as future work.

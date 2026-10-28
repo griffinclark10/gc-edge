@@ -1,0 +1,89 @@
+---
+import Fill from '../Fill.astro';
+import StatusPill from './StatusPill.astro';
+
+interface Props {
+  entries: {
+    date?: string;
+    status: 'planned' | 'in-progress' | 'done';
+    title: string;
+    text?: string;
+  }[];
+}
+
+const { entries } = Astro.props;
+const pillText = { planned: 'PLANNED', 'in-progress': 'IN PROGRESS', done: 'DONE' } as const;
+---
+
+<ol class="log">
+  {entries.map((entry) => (
+    <li>
+      <span class="marker" aria-hidden="true" />
+      <p class="meta mono">
+        {entry.date && <>{entry.date} · </>}
+        <StatusPill
+          text={pillText[entry.status]}
+          tone={entry.status === 'done' ? 'ink' : 'accent'}
+          size="sm"
+        />
+      </p>
+      <h3>{entry.title}</h3>
+      {entry.text && (
+        <p class="text">
+          <Fill text={entry.text} />
+        </p>
+      )}
+    </li>
+  ))}
+</ol>
+
+<style>
+  .log {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-left: 3px solid var(--pp-ink);
+  }
+
+  li {
+    position: relative;
+    padding: 0 0 28px 28px;
+  }
+
+  li:last-child {
+    padding-bottom: 0;
+  }
+
+  /* square markers centred on the 3px rule */
+  .marker {
+    position: absolute;
+    left: -8.5px;
+    top: 6px;
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--pp-ink);
+    background: var(--pp-ground);
+  }
+
+  .meta {
+    margin: 0;
+    font-size: 13px;
+    color: var(--pp-muted);
+  }
+
+  h3 {
+    margin: 6px 0 4px;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--pp-ink);
+  }
+
+  .text {
+    margin: 0;
+    max-width: 640px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--pp-body);
+  }
+</style>

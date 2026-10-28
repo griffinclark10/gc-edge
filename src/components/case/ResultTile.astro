@@ -1,0 +1,55 @@
+---
+import Fill from '../Fill.astro';
+
+interface Props {
+  label: string;
+  /** missing → "[—]" (§4.4) */
+  value?: string;
+  unit?: string;
+  sub?: string;
+}
+
+const { label, value = '[—]', unit, sub } = Astro.props;
+---
+
+<div class="tile">
+  <p class="label mono">{label}</p>
+  <p class="value">
+    <Fill text={value} />
+    {unit && ` ${unit}`}
+  </p>
+  {sub && (
+    <p class="sub mono">
+      <Fill text={sub} />
+    </p>
+  )}
+</div>
+
+<style>
+  .tile {
+    padding: 20px;
+    border: 2px solid var(--pp-ink);
+    background: var(--pp-card);
+  }
+
+  .label {
+    margin: 0;
+    font-size: 12px;
+    color: var(--pp-muted);
+  }
+
+  .value {
+    margin: 8px 0 0;
+    font-size: 44px;
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--pp-ink);
+  }
+
+  .sub {
+    margin: 6px 0 0;
+    font-size: 13px;
+    color: var(--pp-muted);
+  }
+</style>

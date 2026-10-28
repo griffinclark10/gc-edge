@@ -1,0 +1,44 @@
+---
+interface Props {
+  /** "§3 · RESULTS" */
+  eyebrow: string;
+  title?: string;
+  id: string;
+}
+
+const { eyebrow, title, id } = Astro.props;
+---
+
+<section
+  class="container case-section"
+  aria-labelledby={title ? id : undefined}
+  aria-label={title ? undefined : eyebrow.replace(/^§\d+ · /, '')}
+>
+  <p class="eyebrow">{eyebrow}</p>
+  {title && <h2 id={id}>{title}</h2>}
+  <slot />
+</section>
+
+<style>
+  .case-section {
+    padding-top: 96px;
+  }
+
+  .eyebrow {
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    margin: 0 0 32px;
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+
+  @media (max-width: 720px) {
+    .case-section {
+      padding-top: 72px;
+    }
+  }
+</style>

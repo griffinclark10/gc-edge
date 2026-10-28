@@ -14,4 +14,41 @@ tags:
   - real-time video
 illustration: Exp003
 hasPage: true
+links:
+  report: '/papers/helpinghand-asl.pdf'
+
+# ── case study. Facts from the paper (public/papers/helpinghand-asl.pdf) ──
+lede: "A student team's real-time translator for the American Sign Language alphabet: a webcam, a Keras CNN and a browser page. The paper took Best Paper at CUCAI; the live demo taught us more than the test set did."
+date: '2020'
+specimen:
+  team: "5 · QMIND, Queen's AI Hub"
+  model: 'Keras CNN, greyscale input'
+  # The paper's method names Kaggle's ASL Alphabet set; the old site and the card say Sign Language MNIST.
+  dataset: '[CONFIRM: Kaggle ASL Alphabet, per the paper, or Sign Language MNIST, per the old site]'
+  capture: 'OpenCV, live webcam'
+  interface: 'browser'
+  award: 'Best Paper, CUCAI'
+results:
+  title: 'Lab accuracy vs. live accuracy'
+  tiles:
+    - label: 'TEST ACCURACY'
+      value: '93%'
+      sub: 'held-out images, clean backgrounds'
+    - label: 'LIVE ACCURACY'
+      value: '64%'
+      sub: 'real-time webcam'
+    - label: 'AWARD'
+      value: 'Best Paper'
+      sub: 'Canadian Undergraduate Conference on AI'
+  note: "The 29-point gap is the finding. The training images had clean backgrounds and the webcam didn't, and the preprocessing was never tested against noisy scenes. The training loss also flattened to zero early, which the paper reads as overfitting."
 ---
+
+## How it was built
+
+Five of us built HelpingHand through QMIND, the Queen's AI student group. I worked on the Keras model and built the browser interface that ran it against a live webcam feed.
+
+The model is a convolutional network in Keras: alternating convolution and max-pooling layers, a dropout layer against overfitting, and a dense output layer with one class per sign. Frames were converted to greyscale and resized with OpenCV and NumPy before training. Gaussian blur and edge enhancement were tried too; none of the three changed accuracy much (the differences weren't recorded), and greyscale stayed because it sped up training. J and Z were left out because they need motion.
+
+## What we'd have done next
+
+The paper's own conclusion: make preprocessing robust to busy backgrounds, add the motion letters, numbers and words, and move from a web page to a mobile app.

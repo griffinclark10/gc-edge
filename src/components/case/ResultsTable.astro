@@ -1,0 +1,105 @@
+---
+import Fill from '../Fill.astro';
+
+interface Props {
+  n: number;
+  caption: string;
+  columns: string[];
+  rows: string[][];
+  /** row index to emphasise, e.g. the headline result */
+  highlight?: number;
+  note?: string;
+}
+
+const { n, caption, columns, rows, highlight, note } = Astro.props;
+---
+
+<figure class="table-figure">
+  <div class="scroll" tabindex="0" role="region" aria-label={`Table ${n}`}>
+    <table class="mono">
+      <thead>
+        <tr>
+          {columns.map((c) => (
+            <th scope="col">{c}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((row, i) => (
+          <tr class:list={{ highlight: i === highlight }}>
+            {row.map((cell, j) => (j === 0 ? <th scope="row">{cell}</th> : <td>{cell}</td>))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <figcaption class="mono">
+    TABLE {n} · <Fill text={caption} />
+  </figcaption>
+  {note && (
+    <p class="note">
+      <Fill text={note} />
+    </p>
+  )}
+</figure>
+
+<style>
+  .table-figure {
+    margin: 24px 0 0;
+  }
+
+  .scroll {
+    overflow-x: auto;
+    border: 2px solid var(--pp-ink);
+    background: var(--pp-card);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    color: var(--pp-ink-deep);
+  }
+
+  th,
+  td {
+    padding: 10px 14px;
+    text-align: left;
+    white-space: nowrap;
+    border-bottom: 1px solid rgba(28, 61, 150, 0.18);
+  }
+
+  thead th {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--pp-muted);
+    border-bottom: 2px solid var(--pp-ink);
+  }
+
+  tbody th {
+    font-weight: 400;
+  }
+
+  tbody tr:last-child > * {
+    border-bottom: 0;
+  }
+
+  tr.highlight > * {
+    font-weight: 600;
+    background: rgba(28, 61, 150, 0.07);
+  }
+
+  figcaption {
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--pp-muted);
+  }
+
+  .note {
+    margin: 10px 0 0;
+    max-width: 68ch;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--pp-body);
+  }
+</style>
