@@ -18,6 +18,13 @@ export const SITE = {
  */
 export const SHOW_DRAFTS = import.meta.env.DEV || process.env.SHOW_DRAFTS === '1';
 
+/**
+ * Staging switch: `NOINDEX=1` at build time keeps every page out of search engines
+ * (robots meta + robots.txt Disallow) while the site is live but not launched.
+ * Set it in the Cloudflare Pages environment; remove it on launch day.
+ */
+export const NOINDEX = process.env.NOINDEX === '1';
+
 export type Note = CollectionEntry<'notes'>;
 
 /** Published notes, newest first. A published note must have a date. */

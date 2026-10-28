@@ -6,8 +6,9 @@ import rehypeSidenotes from './src/lib/rehype-sidenotes.mjs';
 import blueprintTheme from './src/lib/shiki-blueprint.mjs';
 
 export default defineConfig({
-  // [FILL: domain] — replace before launch (M5). Used for canonical URLs, OG images and the sitemap.
-  site: 'https://example.com',
+  // Cloudflare Pages production URL until a custom domain is attached ([FILL: domain]).
+  // Used for canonical URLs, OG images and the sitemap. Update when the domain moves.
+  site: 'https://gc-edge.pages.dev',
   output: 'static',
   trailingSlash: 'ignore',
   markdown: {

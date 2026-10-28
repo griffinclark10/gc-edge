@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 import bricolageLatin from '@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-opsz-normal.woff2?url';
-import { SITE } from '../lib/site';
+import { NOINDEX, SITE } from '../lib/site';
 import { ogPathFor } from '../lib/og-pages';
 
 interface Props {
@@ -35,6 +35,7 @@ const ogImage = new URL(noindex ? ogPathFor('/') : ogPathFor(Astro.url.pathname)
     <title>{title}</title>
     <meta name="description" content={description} />
     {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+    {NOINDEX && !noindex && <meta name="robots" content="noindex, nofollow" />}
     <meta name="theme-color" content={themeColor} />
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={SITE.name} />

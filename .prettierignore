@@ -6,6 +6,7 @@ public
 design-reference
 SPEC.md
 .lighthouseci
-dist-drafts
+dist-*
 test-results
 playwright-report
+.wrangler

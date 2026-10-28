@@ -11,7 +11,8 @@ SPEC.md
 
 # local preview config
 .claude/
-dist-drafts/
+dist-*/
 test-results/
 playwright-report/
 tests/**/*-snapshots/
+.wrangler/

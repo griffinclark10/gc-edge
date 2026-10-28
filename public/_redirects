@@ -1,0 +1,15 @@
+# Cloudflare Pages redirects (SPEC §3). Old chatgsc.com paths → their new homes, so
+# links keep working once a custom domain replaces chatgsc.com.
+/about                              /#bench                                    301
+/about/                             /#bench                                    301
+/experience                         /#worldline                                301
+/experience/                        /#worldline                                301
+/projects                           /#experiments                              301
+/projects/                          /#experiments                              301
+
+# Old PDFs (public/documents/* on the old site)
+/documents/Resume.pdf               /resume.pdf                                301
+/documents/ENPH455FinalReport.pdf   /papers/cooperative-perception-thesis.pdf  301
+/documents/HelpingHand.pdf          /papers/helpinghand-asl.pdf                301
+# Queue Hop report is withheld until redacted (see TODO-CONTENT.md): send readers to the case study
+/documents/QueueHop.pdf             /experiments/queue-hop/                    301

@@ -60,3 +60,30 @@ Everything below renders visibly on the site (dashed underline) unless marked _h
 - **Queue Hop images were anonymised** before going in the repo (M3): the line photo keeps only the annotated half, fully pixelated, with the model's head-dots redrawn; the app screenshots have venue photos and avatars pixelated. The unblurred originals are only in the old `chat-gsc` repo.
 - **Queue Hop report PDF is withheld.** It contains the un-pixelated app screenshots (teammates' and bystanders' faces, p.17) and a sign with a phone number (p.11), so it's not in the repo and the 002 page has no report link. To publish it, redact those pages, add it as `public/papers/queue-hop.pdf` and restore `links.report` in `queue-hop.mdx`. `helpinghand-asl.pdf` is published as-is, author emails included (Griffin's call, 2026-10-27).
 - **Case-study copy is sourced, not invented:** 001 from the thesis PDF, 002 from the final report, 003 from the paper. Where the spec's card copy and a source disagree, the case study follows the source and the disagreement is listed above.
+
+## Launch checklist (M5)
+
+**Now: go live on `gc-edge.pages.dev`, unindexed.**
+
+1. Commit and push the M5 prep (`_redirects`, `_headers`, `NOINDEX` switch, `site` URL).
+2. Cloudflare dashboard → Workers & Pages → Create → Pages → Connect to Git → `griffinclark10/gc-edge`.
+   - Project name: `gc-edge` (gives `gc-edge.pages.dev`; if the name is taken, update `site` in `astro.config.mjs`)
+   - Production branch: `main` · Framework preset: Astro · Build command: `npm run build` · Output: `dist`
+   - Environment variables (Production): `NODE_VERSION` = `22`, `NOINDEX` = `1`
+3. Optional, keeps the footer joke true: Pages project → Metrics → enable **Web Analytics** (cookieless).
+4. Note: Cloudflare deploys every push to `main` whether or not GitHub CI passes; keep CI green before pushing.
+
+**Before removing `NOINDEX` (public launch):**
+
+- [ ] Bon sign-off on the Exp. 005 card and worldline wording (SPEC guardrail), and the 005 result metric
+- [ ] Résumé PDF at `public/resume.pdf` (the hero, footer and `/documents/Resume.pdf` redirect point there)
+- [ ] Resolve, or accept as visible, the remaining `[FILL]`/`[CONFIRM]` placeholders listed above
+
+**Custom domain (finishes M5):**
+
+- [ ] Choose the domain; Pages project → Custom domains → add it
+- [ ] Set `site` in `astro.config.mjs` to the domain; push
+- [ ] 301 every chatgsc.com path to the new domain: either a `vercel.json` redirect in `chat-gsc` (the Vercel project serves chatgsc.com today) or Squarespace domain forwarding with path forwarding. Old paths then land on this site's `_redirects`
+- [ ] Remove `NOINDEX` from the Cloudflare environment and redeploy
+- [ ] Archive `griffinclark10/chat-gsc` once the 301s are verified
+- [ ] Check: `curl -sI https://chatgsc.com/projects` → 301 to `https://<domain>/projects` → 301 to `/#experiments`
