@@ -9,7 +9,7 @@
         "http://localhost/experiments/helpinghand-asl/index.html",
         "http://localhost/404.html"
       ],
-      "numberOfRuns": 1
+      "numberOfRuns": 3
     },
     "assert": {
       "assertMatrix": [
